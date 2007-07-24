@@ -173,6 +173,10 @@ cp %{_datadir}/automake-1.4/config.* rcapid
 cp %{_datadir}/automake-1.4/config.* capiinit
 cp %{_datadir}/automake-1.4/config.* capiinfo
 
+# tcl hack
+. %{_libdir}/tclConfig.sh
+find -type f | xargs perl -pi -e "s|tcl8\.4|tcl${TCL_VERSION}|g"
+
 %build
 export FORCE_AUTOCONF_2_5=1
 cd capi20; libtoolize --copy --force; aclocal-1.4; automake-1.4; cd -
