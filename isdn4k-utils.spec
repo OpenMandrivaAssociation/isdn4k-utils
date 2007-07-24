@@ -227,6 +227,9 @@ install -m755 %{SOURCE2} $RPM_BUILD_ROOT%{_initrddir}/capi4linux
 #(peroyvind) get rid of drdsl files which are provided by other package according to Steffen Barszus
 rm -rf $RPM_BUILD_ROOT%{_sysconfdir}/drdsl
 
+# cleanup
+rm -rf $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
