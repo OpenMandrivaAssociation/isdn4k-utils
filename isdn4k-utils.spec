@@ -16,27 +16,22 @@ License:	GPL
 Epoch:		1
 Group:		System/Configuration/Networking
 Source0:	%{name}.v%{version}.tar.bz2
-Source1:	%{name}-config.bz2
-Source2:	capi4linux.bz2
+Source1:	%{name}-config
+Source2:	capi4linux
 Patch1:		%{name}.ipppd.patch
 Patch2:		%{name}-capi4kutils-14062004.diff
 Patch3:		%{name}-no-root.patch
-#Patch5:	%{name}-misc.patch.bz2
-#Patch6:	%{name}-vbox.patch.bz2
 Patch7:		%{name}-nomknod.patch
-#Patch8:	%{name}-isdnrep.patch.bz2
 Patch9:		%{name}-glibc222.patch
 Patch10:	%{name}-isdnlog.patch
 Patch11:	%{name}-define.patch
-#Patch12:	%{name}-chmod.patch.bz2
-#Patch13:	%{name}-utils-3.1pre1-ipppd.patch.bz2
 Patch15:	%{name}-eurofile-init-fix.patch
 Patch16:	%{name}-3.2p3-skip-capi-header-check.patch
 Patch17:	isdn4k-utils-libtool.c-gcc-3.4.patch
 Patch18:	isdn4k-utils-lib64.patch
 Patch19:	isdn4k-utils-capifax-ALERT-fix.diff
 Patch20:	isdn4k-utils-64bit-fixes.patch
-Patch21:	isdn4k-utils-ppp243.patch
+Patch21:	isdn4k-utils-ppp244.patch
 Patch22:	isdn4k-utils-gcc4.patch
 URL:		http://www.isdn4linux.de/
 Requires(post):		rpm-helper
@@ -123,20 +118,31 @@ Provides:	lib%{name}-devel %{name}-devel
 Libraries, include files and other resources you can use to develop
 %{name} applications.
 
+%package	doc
+Summary:	Complete HTML documentation for isdn4k-utils
+Group:		System/Configuration/Networking
+Conflicts:	isdn4k-utils < 3.2p3-28mdv2007.1
+
+%description	doc
+This is the original, complete, documentation for isdn4k-utils, in
+HTML format.
+
+isdn4k-utils is a collection of various ISDN related utilities. This
+package contains configuration tools for all ISDN adapters, supported
+by Linux. Furthermore, several status-monitors are provided as well as
+some ISDN-based applications. Namely ipppd, a PPP daemon for synchronous
+PPP over ISDN; vbox, an answering-machine and (for use with AVM-B1 only)
+capifax, a faxmachine.
+
 %prep
 %setup -q -n %{name}
 %patch1 -p1 -b .old
 %patch2 -p1 -b .old
 %patch3 -p1 -b .old
-#%patch5 -p1 -b .old
-#%patch6 -p1 -b .old
 %patch7 -p1 -b .old
-#%patch8 -p1 -b .old
 %patch9 -p1 -b .old
 %patch10 -p0 -b .old
 %patch11 -p1 -b .old
-#%patch12 -p0 -b .old
-#%patch13 -p1 -b .old
 %patch15 -p0 -b .old
 %patch16 -p1 -b .nocheck
 %patch17 -p1 -b .gcc34
@@ -145,12 +151,12 @@ Libraries, include files and other resources you can use to develop
 %patch20 -p1 -b .64bit-fixes
 # (blino) copy the whole directory and replace 2.4.2 with current version
 cp -a pppdcapiplugin/ppp-2.4.2 pppdcapiplugin/ppp-%{pppd_ver}
-%patch21 -p1 -b .ppp243
+%patch21 -p1 -b .ppp244
 perl -pi -e 's|(PLUGINDIR=\${DESTDIR})/usr/lib/(pppd/)|\1/\$(LIBDIR)/\2|' pppdcapiplugin/ppp-2.*/Makefile
 %patch22 -p0 -b .gcc4
 
 #(peroyvind) provide our own config file with correct options and paths
-bzcat %{SOURCE1} > .config
+install %{SOURCE1} .config
 echo "LIBDIR='%{_libdir}'" >> .config
 
 # AMD K6 is not an i686
@@ -212,7 +218,7 @@ install -m644 eurofile/doc/*.5 $RPM_BUILD_ROOT%{_mandir}/man5/
 rm -rf $RPM_BUILD_ROOT/usr/lib/X11/app-defaults
 rm -f  $RPM_BUILD_ROOT%{_sysconfdir}/isdn/eftusers
 
-bzcat %{SOURCE2} > $RPM_BUILD_ROOT%{_initrddir}/capi4linux
+install -m755 %{SOURCE2} $RPM_BUILD_ROOT%{_initrddir}/capi4linux
 
 #(peroyvind) get rid of drdsl files which are provided by other package according to Steffen Barszus
 rm -rf $RPM_BUILD_ROOT%{_sysconfdir}/drdsl
@@ -237,15 +243,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%lang(de) %doc %{_docdir}/%{name}-%{version}/i4lfaq-de*
-%doc %{_docdir}/%{name}-%{version}/i4lfaq-[123456789]*.html
-
-%doc  %{_docdir}/%{name}-%{version}/i4lfaq.*
+%doc README NEWS
 %dir %{_libdir}/isdn
 %dir %{_datadir}/isdn
 %{_datadir}/isdn/*
 %dir %{_sysconfdir}/isdn
-%attr(0744,root,root) %config(noreplace) %{_initrddir}/capi4linux
+%{_initrddir}/capi4linux
 #%dir %{_sysconfdir}/drdsl
 #%config(noreplace) %{_sysconfdir}/drdsl/adsl.conf
 %config(noreplace) %{_sysconfdir}/ppp/peers/isdn/arcor
@@ -361,3 +364,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libcapi*.a
 %{_includedir}/capi*.h
 
+%files doc
+%lang(de) %doc FAQ/i4lfaq-de*
+%doc FAQ/i4lfaq-[123456789]*.html FAQ/i4lfaq.*
