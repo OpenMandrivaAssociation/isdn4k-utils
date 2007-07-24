@@ -1,6 +1,6 @@
 %define	name		isdn4k-utils
 %define	version		3.2p3
-%define release		%mkrel 28
+%define release		%mkrel 29
 %define	lib_major	2
 %define	lib_name	%mklibname %{name} %{lib_major}
 %define	lib_name_dev	%{lib_name}-devel
@@ -33,6 +33,7 @@ Patch19:	isdn4k-utils-capifax-ALERT-fix.diff
 Patch20:	isdn4k-utils-64bit-fixes.patch
 Patch21:	isdn4k-utils-ppp244.patch
 Patch22:	isdn4k-utils-gcc4.patch
+Patch23:	isdn4k-utils-target.patch
 URL:		http://www.isdn4linux.de/
 Requires(post):		rpm-helper
 Requires(preun):		rpm-helper
@@ -154,6 +155,7 @@ cp -a pppdcapiplugin/ppp-2.4.2 pppdcapiplugin/ppp-%{pppd_ver}
 %patch21 -p1 -b .ppp244
 perl -pi -e 's|(PLUGINDIR=\${DESTDIR})/usr/lib/(pppd/)|\1/\$(LIBDIR)/\2|' pppdcapiplugin/ppp-2.*/Makefile
 %patch22 -p0 -b .gcc4
+%patch23 -p1 -b .target
 
 #(peroyvind) provide our own config file with correct options and paths
 install %{SOURCE1} .config
@@ -185,7 +187,7 @@ cd capifax; aclocal-1.4; automake-1.4; autoconf; cd -
 cd capiinfo; aclocal-1.4; automake-1.4; autoconf; cd -
 
 
-perl -pi -e "s|CONFIG_FAQDIR=.*|CONFIG_FAQDIR=\'%{_docdir}/%{name}-%{version}\'|" .config
+perl -pi -e "s|CONFIG_FAQDIR=.*|CONFIG_FAQDIR=''|" .config
 #(peroyvind) added more flags for pppdcapiplugin since we're overriding it's CFLAGS which cointains flags needed
 RPM_OPT_FLAGS="$RPM_OPT_FLAGS -DISDN_MAX_DRIVERS=32 -DISDN_MAX_CHANNELS=64 -fPIC -DPPPVER=%{pppd_ver_num} -I. -I`pwd`/capi20 -Ipppd -L`pwd`/capi20 -I./include"
 
@@ -226,9 +228,6 @@ install -m755 %{SOURCE2} $RPM_BUILD_ROOT%{_initrddir}/capi4linux
 
 #(peroyvind) get rid of drdsl files which are provided by other package according to Steffen Barszus
 rm -rf $RPM_BUILD_ROOT%{_sysconfdir}/drdsl
-
-# cleanup
-rm -rf $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
