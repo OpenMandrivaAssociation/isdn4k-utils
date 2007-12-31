@@ -253,7 +253,6 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_datadir}/isdn
 %{_datadir}/isdn/*
 %dir %{_sysconfdir}/isdn
-%{_initrddir}/capi4linux
 #%dir %{_sysconfdir}/drdsl
 #%config(noreplace) %{_sysconfdir}/drdsl/adsl.conf
 %config(noreplace) %{_sysconfdir}/ppp/peers/isdn/arcor
@@ -285,6 +284,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/divertctrl.8*
 %{_mandir}/man8/actctrl.8*
 %defattr(755,root,root,755)
+%{_initrddir}/capi4linux
 %{_sbindir}/avmcapictrl
 %{_sbindir}/capiinit
 %{_sbindir}/hisaxctrl
