@@ -38,6 +38,7 @@ URL:		http://www.isdn4linux.de/
 Requires(post):		rpm-helper
 Requires(preun):		rpm-helper
 Requires:	kernel >= 2.2.0
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	ppp
 BuildRequires:	gdbm-devel xpm-devel ncurses-devel kernel-source X11-devel imake
 BuildRequires:	automake1.4 autoconf2.5 linuxdoc-tools libtcl-devel
