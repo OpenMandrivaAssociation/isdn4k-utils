@@ -1,6 +1,6 @@
 %define	name		isdn4k-utils
 %define	version		3.2p3
-%define release		%mkrel 31
+%define release		%mkrel 32
 %define	lib_major	2
 %define	lib_name	%mklibname %{name} %{lib_major}
 %define	lib_name_dev	%{lib_name}-devel
@@ -37,7 +37,6 @@ Patch23:	isdn4k-utils-target.patch
 URL:		http://www.isdn4linux.de/
 Requires(post):		rpm-helper
 Requires(preun):		rpm-helper
-Requires:	kernel >= 2.2.0
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	ppp
 BuildRequires:	gdbm-devel xpm-devel ncurses-devel kernel-source X11-devel imake
