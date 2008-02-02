@@ -1,6 +1,6 @@
 %define	name		isdn4k-utils
 %define	version		3.2p3
-%define release		%mkrel 32
+%define release		%mkrel 33
 %define	lib_major	2
 %define	lib_name	%mklibname %{name} %{lib_major}
 %define	lib_name_dev	%{lib_name}-devel
@@ -34,6 +34,8 @@ Patch20:	isdn4k-utils-64bit-fixes.patch
 Patch21:	isdn4k-utils-ppp244.patch
 Patch22:	isdn4k-utils-gcc4.patch
 Patch23:	isdn4k-utils-target.patch
+# capi20.h must #include sys/types.h - AdamW 2008/02
+Patch24:	isdn4k-utils-3.2p3-types.patch
 URL:		http://www.isdn4linux.de/
 Requires(post):		rpm-helper
 Requires(preun):		rpm-helper
@@ -155,6 +157,7 @@ cp -a pppdcapiplugin/ppp-2.4.2 pppdcapiplugin/ppp-%{pppd_ver}
 perl -pi -e 's|(PLUGINDIR=\${DESTDIR})/usr/lib/(pppd/)|\1/\$(LIBDIR)/\2|' pppdcapiplugin/ppp-2.*/Makefile
 %patch22 -p0 -b .gcc4
 %patch23 -p1 -b .target
+%patch24 -p1 -b .types
 
 #(peroyvind) provide our own config file with correct options and paths
 install %{SOURCE1} .config
