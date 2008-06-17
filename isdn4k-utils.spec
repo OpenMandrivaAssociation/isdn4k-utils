@@ -1,6 +1,6 @@
 %define	name		isdn4k-utils
 %define	version		3.2p3
-%define release		%mkrel 33
+%define release		%mkrel 34
 %define	lib_major	2
 %define	lib_name	%mklibname %{name} %{lib_major}
 %define	lib_name_dev	%{lib_name}-devel
