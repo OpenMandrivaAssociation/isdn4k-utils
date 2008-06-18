@@ -1,17 +1,14 @@
-%define	name		isdn4k-utils
-%define	version		3.2p3
-%define release		%mkrel 35
-%define	lib_major	2
-%define	lib_name	%mklibname %{name} %{lib_major}
-%define	lib_name_dev	%{lib_name}-devel
+%define major 2
+%define libname %mklibname %{name} %{major}
+%define develname %mklibname %{name} -d
 
-%define pppd_ver	%(/usr/sbin/pppd --version 2>&1 | sed -n '/pppd version \\([0-9][.0-9]*\\)/s//\\1/p')
-%define pppd_ver_num	%(echo %{pppd_ver} | perl -pe '/(\\d+)\\.(\\d)\\.?(\\d)?\\.?(\\d)?/; $_=($1)*1000000+($2)*10000+($3)*100+($4||0)')
+%define pppd_ver %(/usr/sbin/pppd --version 2>&1 | sed -n '/pppd version \\([0-9][.0-9]*\\)/s//\\1/p')
+%define pppd_ver_num %(echo %{pppd_ver} | perl -pe '/(\\d+)\\.(\\d)\\.?(\\d)?\\.?(\\d)?/; $_=($1)*1000000+($2)*10000+($3)*100+($4||0)')
 
 Summary:	Bundled Utilities for configuring ISDN4Linux
-Name:		%{name}
-Version:	%{version}
-Release:	%{release}
+Name:		isdn4k-utils
+Version:	3.2p3
+Release:	%mkrel 35
 License:	GPL
 Epoch:		1
 Group:		System/Configuration/Networking
@@ -39,9 +36,17 @@ Patch23:	isdn4k-utils-target.patch
 Patch24:	isdn4k-utils-3.2p3-types.patch
 Requires(post): rpm-helper
 Requires(preun): rpm-helper
+BuildRequires:	autoconf2.5
+BuildRequires:	automake1.4
+BuildRequires:	gdbm-devel
+BuildRequires:	imake
+BuildRequires:	kernel-source
+BuildRequires:	libtcl-devel
+BuildRequires:	linuxdoc-tools
+BuildRequires:	ncurses-devel
 BuildRequires:	ppp
-BuildRequires:	gdbm-devel xpm-devel ncurses-devel kernel-source X11-devel imake
-BuildRequires:	automake1.4 autoconf2.5 linuxdoc-tools libtcl-devel
+BuildRequires:	X11-devel
+BuildRequires:	xpm-devel
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
@@ -55,7 +60,7 @@ capifax, a faxmachine.
 %package	xtools
 Summary:	ISDN utilities that use X
 Group:		Networking/Other
-Requires:	%{name} = %{epoch}:%{version}
+Requires:	%{name} >= %{epoch}:%{version}
 
 %description	xtools
 These are the graphical utilities for ISDN, xmonisdn and xisdnload.
@@ -66,7 +71,7 @@ connection, for example.
 %package	vbox
 Summary:	ISDN answering machine
 Group:		Communications
-Requires:	%{name} = %{epoch}:%{version}
+Requires:	%{name} >= %{epoch}:%{version}
 
 %description	vbox
 ISDN Answering Machine
@@ -75,7 +80,7 @@ ISDN Answering Machine
 Summary:	ISDN eurofile transfer tool
 Group:		Networking/File transfer
 License:	LGPL
-Requires:	%{name} = %{epoch}:%{version}
+Requires:	%{name} >= %{epoch}:%{version}
 Requires(post): rpm-helper
 Requires(preun): rpm-helper
 
@@ -86,7 +91,7 @@ you need this package.
 %package	isdnlog
 Summary:	ISDN connection logger
 Group:		Communications
-Requires:	%{name} = %{epoch}:%{version}
+Requires:	%{name} >= %{epoch}:%{version}
 
 %description	isdnlog
 isdnlog logs all ISDN connections, and can calculate the cost of calls.
@@ -95,12 +100,12 @@ carrier would have been cheaper for a given call. For countries where calls
 are charged per discrete unit, it can disconnect the line just before the
 next unit starts. 
 
-%package -n	%{lib_name}
+%package -n	%{libname}
 Summary:	Main library for %{name}
 Group:		System/Libraries
-Requires:	%{name} = %{epoch}:%{version}
+Requires:	%{name} >= %{epoch}:%{version}
 
-%description -n	%{lib_name}
+%description -n	%{libname}
 isdn4k-utils is a collection of various ISDN related utilities. This
 package contains configuration tools for all ISDN adapters, supported
 by Linux. Furthermore, several status-monitors are provided as well as
@@ -110,13 +115,14 @@ capifax, a faxmachine.
 This package contains the library needed to run programs dynamically
 linked with %{name}.
 
-%package -n	%{lib_name_dev}
+%package -n	%{develname}
 Summary:	Includes and other files to develop %{name} applications
 Group:		Development/C
-Requires:	%{lib_name} = %{epoch}:%{version}
+Requires:	%{libname} >= %{epoch}:%{version}
 Provides:	lib%{name}-devel %{name}-devel
+Obsoletes:	%{mklibname %{name} -d 2}
 
-%description -n	%{lib_name_dev}
+%description -n	%{develname}
 Libraries, include files and other resources you can use to develop
 %{name} applications.
 
@@ -151,10 +157,12 @@ capifax, a faxmachine.
 %patch18 -p1 -b .lib64
 %patch19 -p0 -b .old
 %patch20 -p1 -b .64bit-fixes
+
 # (blino) copy the whole directory and replace 2.4.2 with current version
 cp -a pppdcapiplugin/ppp-2.4.2 pppdcapiplugin/ppp-%{pppd_ver}
 %patch21 -p1 -b .ppp244
 perl -pi -e 's|(PLUGINDIR=\${DESTDIR})/usr/lib/(pppd/)|\1/\$(LIBDIR)/\2|' pppdcapiplugin/ppp-2.*/Makefile
+
 %patch22 -p0 -b .gcc4
 %patch23 -p1 -b .target
 %patch24 -p1 -b .types
@@ -188,8 +196,8 @@ cd capiinit; aclocal-1.4; automake-1.4; autoconf; cd -
 cd capifax; aclocal-1.4; automake-1.4; autoconf; cd -
 cd capiinfo; aclocal-1.4; automake-1.4; autoconf; cd -
 
-
 perl -pi -e "s|CONFIG_FAQDIR=.*|CONFIG_FAQDIR=''|" .config
+
 #(peroyvind) added more flags for pppdcapiplugin since we're overriding it's CFLAGS which cointains flags needed
 RPM_OPT_FLAGS="$RPM_OPT_FLAGS -DISDN_MAX_DRIVERS=32 -DISDN_MAX_CHANNELS=64 -fPIC -DPPPVER=%{pppd_ver_num} -I. -I`pwd`/capi20 -Ipppd -L`pwd`/capi20 -I./include"
 
@@ -198,41 +206,48 @@ make CFLAGS="$RPM_OPT_FLAGS" CXXFLAGS="$RPM_OPT_FLAGS" CCFLAGS="$RPM_OPT_FLAGS" 
 perl -pi -e "s|CDEBUGFLAGS = .*|CDEBUGFLAGS = $RPM_OPT_FLAGS|" xisdnload/Makefile xmonisdn/Makefile
 perl -pi -e "s|CXXDEBUGFLAGS = \-0.*|CXXDEBUGFLAGS = $RPM_OPT_FLAGS|" xisdnload/Makefile xmonisdn/Makefile
 cp isdnlog/isdnlog/isdnlog.5.in isdnlog/isdnlog/isdnlog.5
+
 #(peroyvind) workaround for non-existing rcapid/acinclude.m4
 touch rcapid/acinclude.m4
+
 # (blino) compile pppdcapiplugin for current pppd only to avoid errors and unnecessary time spent on compiling
 perl -pi -e "s|^(PPPVERSIONS\s*)=\s*.+$|\1= %{pppd_ver}|" pppdcapiplugin/Makefile
+
 #(peroyvind) added CCFLAGS since it's a variable used a few places in stead of CFLAGS (*sigh*)
 make CFLAGS="$RPM_OPT_FLAGS" CXXFLAGS="$RPM_OPT_FLAGS" CCFLAGS="$RPM_OPT_FLAGS" || make CFLAGS="$RPM_OPT_FLAGS" CXXFLAGS="$RPM_OPT_FLAGS" CCFLAGS="$RPM_OPT_FLAGS"
 
 %install
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
+
 RPM_OPT_FLAGS="$RPM_OPT_FLAGS -DISDN_MAX_DRIVERS=32 -DISDN_MAX_CHANNELS=64 -fPIC -DPPPVER=%{pppd_ver_num} -I. -I`pwd`/capi20 -Ipppd -L`pwd`/capi20 -I./include"
-mkdir -p $RPM_BUILD_ROOT{%{_sbindir},%{_bindir},%{_includedir},%{_mandir},%{_docdir},/sbin,%{_initrddir},%{_libdir}/isdn}
+
+mkdir -p %{buildroot}{%{_sbindir},%{_bindir},%{_includedir},%{_mandir},%{_docdir},/sbin,%{_initrddir},%{_libdir}/isdn}
+
 #(peroyvind) yet another workaround.. this time for providing compile flags for stuff that was'nt compiled last time..
-%{makeinstall_std} CFLAGS="$RPM_OPT_FLAGS" CXXFLAGS="$RPM_OPT_FLAGS" CCFLAGS="$RPM_OPT_FLAGS" MANPATH=%{_mandir}
-rm -f $RPM_BUILD_ROOT%{_bindir}/vboxbeep # security hole if used. (dam's)
-rm -f $RPM_BUILD_ROOT%{_mandir}/man*/vboxbeep*
+%makeinstall_std CFLAGS="$RPM_OPT_FLAGS" CXXFLAGS="$RPM_OPT_FLAGS" CCFLAGS="$RPM_OPT_FLAGS" MANPATH=%{_mandir}
+rm -f %{buildroot}%{_bindir}/vboxbeep # security hole if used. (dam's)
+rm -f %{buildroot}%{_mandir}/man*/vboxbeep*
+
 #(peroyvind) fix incorrect filename for man page
-mv $RPM_BUILD_ROOT%{_mandir}/man8/.isdnctrl_conf.8 $RPM_BUILD_ROOT%{_mandir}/man8/isdnctrl_conf.8
+mv %{buildroot}%{_mandir}/man8/.isdnctrl_conf.8 %{buildroot}%{_mandir}/man8/isdnctrl_conf.8
+
 #(peroyvind) move this one out of buildroot, we want to have it somewhere else..
-rm -rf vbox/docs; mv $RPM_BUILD_ROOT%{_docdir}/vbox vbox/docs
+rm -rf vbox/docs; mv %{buildroot}%{_docdir}/vbox vbox/docs
+
 #(peroyvind) fix name for init script
-mv $RPM_BUILD_ROOT%{_initrddir}/eftd.sh $RPM_BUILD_ROOT%{_initrddir}/eftd
+mv %{buildroot}%{_initrddir}/eftd.sh %{buildroot}%{_initrddir}/eftd
+
 #(peroyvind) install man pages for eurofile
-install -m644 eurofile/doc/*.5 $RPM_BUILD_ROOT%{_mandir}/man5/
+install -m644 eurofile/doc/*.5 %{buildroot}%{_mandir}/man5/
 
 #(peroyvind) remove uninstalled symlink
-rm -rf $RPM_BUILD_ROOT/usr/lib/X11/app-defaults
-rm -f  $RPM_BUILD_ROOT%{_sysconfdir}/isdn/eftusers
+rm -rf %{buildroot}/usr/lib/X11/app-defaults
+rm -f  %{buildroot}%{_sysconfdir}/isdn/eftusers
 
-install -m755 %{SOURCE2} $RPM_BUILD_ROOT%{_initrddir}/capi4linux
+install -m755 %{SOURCE2} %{buildroot}%{_initrddir}/capi4linux
 
 #(peroyvind) get rid of drdsl files which are provided by other package according to Steffen Barszus
-rm -rf $RPM_BUILD_ROOT%{_sysconfdir}/drdsl
-
-%clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}%{_sysconfdir}/drdsl
 
 %post
 %_post_service capi4linux
@@ -241,10 +256,11 @@ rm -rf $RPM_BUILD_ROOT
 %_preun_service capi4linux
 
 %if %mdkversion < 200900
-%post -n %{lib_name} -p /sbin/ldconfig
+%post -n %{libname} -p /sbin/ldconfig
 %endif
+
 %if %mdkversion < 200900
-%postun -n %{lib_name} -p /sbin/ldconfig
+%postun -n %{libname} -p /sbin/ldconfig
 %endif
 
 %post eurofile
@@ -252,6 +268,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %preun eurofile
 %_preun_service eftd
+
+%clean
+rm -rf %{buildroot}
 
 %files
 %defattr(644,root,root,755)
@@ -361,7 +380,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/isdn*
 %config(noreplace) %{_sysconfdir}/isdn/stop
 
-%files -n %{lib_name}
+%files -n %{libname}
 %defattr(644,root,root,755)
 %doc COPYING README NEWS
 %defattr(755,root,root,755)
@@ -371,7 +390,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libcapi*.so
 %{_libdir}/pppd/%{pppd_ver}/*
 
-%files -n %{lib_name_dev}
+%files -n %{develname}
 %defattr(644,root,root,755)
 %{_libdir}/libcapi*.a
 %{_includedir}/capi*.h
