@@ -1,6 +1,6 @@
 %define	name		isdn4k-utils
 %define	version		3.2p3
-%define release		%mkrel 34
+%define release		%mkrel 35
 %define	lib_major	2
 %define	lib_name	%mklibname %{name} %{lib_major}
 %define	lib_name_dev	%{lib_name}-devel
@@ -15,6 +15,7 @@ Release:	%{release}
 License:	GPL
 Epoch:		1
 Group:		System/Configuration/Networking
+URL:		http://www.isdn4linux.de/
 Source0:	%{name}.v%{version}.tar.bz2
 Source1:	%{name}-config
 Source2:	capi4linux
@@ -36,13 +37,12 @@ Patch22:	isdn4k-utils-gcc4.patch
 Patch23:	isdn4k-utils-target.patch
 # capi20.h must #include sys/types.h - AdamW 2008/02
 Patch24:	isdn4k-utils-3.2p3-types.patch
-URL:		http://www.isdn4linux.de/
-Requires(post):		rpm-helper
-Requires(preun):		rpm-helper
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
+Requires(post): rpm-helper
+Requires(preun): rpm-helper
 BuildRequires:	ppp
 BuildRequires:	gdbm-devel xpm-devel ncurses-devel kernel-source X11-devel imake
 BuildRequires:	automake1.4 autoconf2.5 linuxdoc-tools libtcl-devel
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 isdn4k-utils is a collection of various ISDN related utilities. This
@@ -76,8 +76,8 @@ Summary:	ISDN eurofile transfer tool
 Group:		Networking/File transfer
 License:	LGPL
 Requires:	%{name} = %{epoch}:%{version}
-Requires(post):		rpm-helper
-Requires(preun):		rpm-helper
+Requires(post): rpm-helper
+Requires(preun): rpm-helper
 
 %description	eurofile
 If you want to send / receive files over an ISDN line with the eurofile system,
