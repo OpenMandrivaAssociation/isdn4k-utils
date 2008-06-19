@@ -249,6 +249,9 @@ install -m755 %{SOURCE2} %{buildroot}%{_initrddir}/capi4linux
 #(peroyvind) get rid of drdsl files which are provided by other package according to Steffen Barszus
 rm -rf %{buildroot}%{_sysconfdir}/drdsl
 
+# temporary hack to find out why the bs won't play nice...
+find %{buildroot}
+
 %post
 %_post_service capi4linux
 
