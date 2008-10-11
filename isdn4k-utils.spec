@@ -1,4 +1,4 @@
-%define major 2
+%define major 3
 %define libname %mklibname %{name} %{major}
 %define develname %mklibname %{name} -d
 
@@ -7,17 +7,17 @@
 
 Summary:	Bundled Utilities for configuring ISDN4Linux
 Name:		isdn4k-utils
-Version:	3.2p3
-Release:	%mkrel 38
-License:	GPL
+Version:	3.12
+Release:	%mkrel 0.1
+License:	GPLv2
 Epoch:		1
 Group:		System/Configuration/Networking
 URL:		http://www.isdn4linux.de/
-Source0:	%{name}.v%{version}.tar.bz2
+Source0:	%{name}.tar.gz
 Source1:	%{name}-config
 Source2:	capi4linux
+Source3:	isdn4k-utils-ppp-2.4.4.tar.bz2
 Patch1:		%{name}.ipppd.patch
-Patch2:		%{name}-capi4kutils-14062004.diff
 Patch3:		%{name}-no-root.patch
 Patch7:		%{name}-nomknod.patch
 Patch9:		%{name}-glibc222.patch
@@ -25,27 +25,36 @@ Patch10:	%{name}-isdnlog.patch
 Patch11:	%{name}-define.patch
 Patch15:	%{name}-eurofile-init-fix.patch
 Patch16:	%{name}-3.2p3-skip-capi-header-check.patch
-Patch17:	isdn4k-utils-libtool.c-gcc-3.4.patch
 Patch18:	isdn4k-utils-lib64.patch
-Patch19:	isdn4k-utils-capifax-ALERT-fix.diff
 Patch20:	isdn4k-utils-64bit-fixes.patch
 Patch21:	isdn4k-utils-ppp244.patch
-Patch22:	isdn4k-utils-gcc4.patch
 Patch23:	isdn4k-utils-target.patch
 # capi20.h must #include sys/types.h - AdamW 2008/02
 Patch24:	isdn4k-utils-3.2p3-types.patch
+Patch25:	isdn4k-utils-autoconf25x.diff
+Patch26:	isdn4k-utils-cleanup.diff
+Patch27:	isdn4k-utils-openssl_des.h_fix.diff
 Requires(post): rpm-helper
 Requires(preun): rpm-helper
 BuildRequires:	autoconf2.5
-BuildRequires:	automake1.4
+BuildRequires:	automake
 BuildRequires:	gdbm-devel
 BuildRequires:	imake
 BuildRequires:	kernel-source
 BuildRequires:	libtcl-devel
+BuildRequires:	libtool
+BuildRequires:	libxext-devel
+BuildRequires:	libxmu-devel
+BuildRequires:	libxp-devel
+BuildRequires:	libxt-devel
 BuildRequires:	linuxdoc-tools
 BuildRequires:	ncurses-devel
+BuildRequires:	openssl-devel
+BuildRequires:	pcap-devel
 BuildRequires:	ppp
+BuildRequires:	ppp-devel
 BuildRequires:	X11-devel
+BuildRequires:	xaw-devel
 BuildRequires:	xpm-devel
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
@@ -143,9 +152,19 @@ PPP over ISDN; vbox, an answering-machine and (for use with AVM-B1 only)
 capifax, a faxmachine.
 
 %prep
-%setup -q -n %{name}
+
+%setup -q -n %{name} -a3
+
+find . -type d -perm 0700 -exec chmod 755 {} \;
+find . -type f -perm 0554 -exec chmod 755 {} \;
+find . -type f -perm 0555 -exec chmod 755 {} \;
+find . -type f -perm 0444 -exec chmod 644 {} \;
+
+for i in `find . -type d -name CVS` `find . -type f -name .cvs\*` `find . -type f -name .#\*`; do
+    if [ -e "$i" ]; then rm -rf $i; fi >&/dev/null
+done
+
 %patch1 -p1 -b .old
-%patch2 -p1 -b .old
 %patch3 -p1 -b .old
 %patch7 -p1 -b .old
 %patch9 -p1 -b .old
@@ -153,19 +172,17 @@ capifax, a faxmachine.
 %patch11 -p1 -b .old
 %patch15 -p0 -b .old
 %patch16 -p1 -b .nocheck
-%patch17 -p1 -b .gcc34
 %patch18 -p1 -b .lib64
-%patch19 -p0 -b .old
 %patch20 -p1 -b .64bit-fixes
 
-# (blino) copy the whole directory and replace 2.4.2 with current version
-cp -a pppdcapiplugin/ppp-2.4.2 pppdcapiplugin/ppp-%{pppd_ver}
-%patch21 -p1 -b .ppp244
-perl -pi -e 's|(PLUGINDIR=\${DESTDIR})/usr/lib/(pppd/)|\1/\$(LIBDIR)/\2|' pppdcapiplugin/ppp-2.*/Makefile
+# (simpler) lib64 fix
+perl -pi -e "s|/usr/lib/|%{_libdir}/|" pppdcapiplugin/ppp-2.*/Makefile pppdcapiplugin/Makefile.template
 
-%patch22 -p0 -b .gcc4
 %patch23 -p1 -b .target
 %patch24 -p1 -b .types
+%patch25 -p1 -b .autoconf25x
+%patch26 -p1 -b .cleanup
+%patch27 -p0 -b .openssl_des.h_fix
 
 #(peroyvind) provide our own config file with correct options and paths
 install %{SOURCE1} .config
@@ -179,30 +196,46 @@ perl -pi -e "s/\| k5 \|/\| k5 \| k6 \|/" vbox3/config.sub
 perl -pi -e "s/\| k5-\* \|/\| k5-\* \| k6-* \|/" vbox3/config.sub
 %endif
 
-#(peroyvind) fix automake in capifax
-cp %{_datadir}/automake-1.4/config.* capifax
-cp %{_datadir}/automake-1.4/config.* rcapid
-cp %{_datadir}/automake-1.4/config.* capiinit
-cp %{_datadir}/automake-1.4/config.* capiinfo
-
 # tcl hack
 . %{_libdir}/tclConfig.sh
 find -type f | xargs perl -pi -e "s|tcl8\.4|tcl${TCL_VERSION}|g"
 
+# nuke this for now
+rm -rf ant-phone
+
+# antiborker
+#perl -pi -e "s|\'||g" .config <- this won't work!
+find vbox -type f | xargs perl -pi -e "s|\@VBOX_DOCDIR\@|/usr/share/doc/vbox|g"
+find vbox -type f | xargs perl -pi -e "s|\@VBOX_LOCKDIR\@|/var/lock|g"
+
 %build
 export FORCE_AUTOCONF_2_5=1
-cd capi20; libtoolize --copy --force; aclocal-1.4; automake-1.4; cd -
-cd capiinit; aclocal-1.4; automake-1.4; autoconf; cd - 
-cd capifax; aclocal-1.4; automake-1.4; autoconf; cd -
-cd capiinfo; aclocal-1.4; automake-1.4; autoconf; cd -
 
-perl -pi -e "s|CONFIG_FAQDIR=.*|CONFIG_FAQDIR=''|" .config
+for i in */configure; do
+    cd `dirname $i`
+	autoreconf -fis
+    cd ..
+done
+
+(cd linux && ln -s /usr/include .)
+
+# workaround for automake/autoconf
+if [ -x /usr/share/automake/depcomp ] ; then
+  for i in capiinfo capiinit rcapid capifax; do
+    cp -f /usr/share/automake/depcomp $i
+    ( cd $i ; aclocal && autoconf )
+  done
+fi
+
+# we need it on ia64 machine
+( cd capi20; [ -f configure.in ] && libtoolize --copy --force )
+( cd vbox; [ -f configure.in ] && libtoolize --copy --force )
 
 #(peroyvind) added more flags for pppdcapiplugin since we're overriding it's CFLAGS which cointains flags needed
-RPM_OPT_FLAGS="$RPM_OPT_FLAGS -DISDN_MAX_DRIVERS=32 -DISDN_MAX_CHANNELS=64 -fPIC -DPPPVER=%{pppd_ver_num} -I. -I`pwd`/capi20 -Ipppd -L`pwd`/capi20 -I./include"
+RPM_OPT_FLAGS="$RPM_OPT_FLAGS -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DISDN_MAX_DRIVERS=32 -DISDN_MAX_CHANNELS=64 -fPIC -DPPPVER=%{pppd_ver_num} -I. -I`pwd`/capi20 -Ipppd -L`pwd`/capi20 -I./include"
 
 #(peroyvind) workaround for wrong aclocal
-make CFLAGS="$RPM_OPT_FLAGS" CXXFLAGS="$RPM_OPT_FLAGS" CCFLAGS="$RPM_OPT_FLAGS" subconfig ACLOCAL=aclocal-1.4 AUTOMAKE=automake-1.4
+make CFLAGS="$RPM_OPT_FLAGS" CXXFLAGS="$RPM_OPT_FLAGS" CCFLAGS="$RPM_OPT_FLAGS" subconfig
 perl -pi -e "s|CDEBUGFLAGS = .*|CDEBUGFLAGS = $RPM_OPT_FLAGS|" xisdnload/Makefile xmonisdn/Makefile
 perl -pi -e "s|CXXDEBUGFLAGS = \-0.*|CXXDEBUGFLAGS = $RPM_OPT_FLAGS|" xisdnload/Makefile xmonisdn/Makefile
 cp isdnlog/isdnlog/isdnlog.5.in isdnlog/isdnlog/isdnlog.5
@@ -219,7 +252,7 @@ make CFLAGS="$RPM_OPT_FLAGS" CXXFLAGS="$RPM_OPT_FLAGS" CCFLAGS="$RPM_OPT_FLAGS" 
 %install
 rm -rf %{buildroot}
 
-RPM_OPT_FLAGS="$RPM_OPT_FLAGS -DISDN_MAX_DRIVERS=32 -DISDN_MAX_CHANNELS=64 -fPIC -DPPPVER=%{pppd_ver_num} -I. -I`pwd`/capi20 -Ipppd -L`pwd`/capi20 -I./include"
+RPM_OPT_FLAGS="$RPM_OPT_FLAGS -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DISDN_MAX_DRIVERS=32 -DISDN_MAX_CHANNELS=64 -fPIC -DPPPVER=%{pppd_ver_num} -I. -I`pwd`/capi20 -Ipppd -L`pwd`/capi20 -I./include"
 
 mkdir -p %{buildroot}{%{_sbindir},%{_bindir},%{_includedir},%{_mandir},%{_docdir},/sbin,%{_initrddir},%{_libdir}/isdn}
 
@@ -249,8 +282,14 @@ install -m755 %{SOURCE2} %{buildroot}%{_initrddir}/capi4linux
 #(peroyvind) get rid of drdsl files which are provided by other package according to Steffen Barszus
 rm -rf %{buildroot}%{_sysconfdir}/drdsl
 
-# temporary hack to find out why the bs won't play nice...
-find %{buildroot}
+# bork
+perl -pi -e "s|^dependency_libs=.*|dependency_libs=\' -L%{_libdir}\'|g" %{buildroot}%{_libdir}/libcapi*.la
+
+# cleanup
+rm -f %{buildroot}/usr/share/doc/i4lfaq*
+
+# hmm...
+mv %{buildroot}/sbin/* %{buildroot}%{_sbindir}/
 
 %post
 %_post_service capi4linux
@@ -388,7 +427,7 @@ rm -rf %{buildroot}
 %doc COPYING README NEWS
 %defattr(755,root,root,755)
 %{_libdir}/libcapi*.la
-%{_libdir}/libcapi*.so.*
+%{_libdir}/libcapi*.so.%{major}*
 # (blino) libcapi20.so filename is hardcoded in capidyn.c, used by capiplugin.so
 %attr(755,root,root) %{_libdir}/libcapi*.so
 %{_libdir}/pppd/%{pppd_ver}/*
