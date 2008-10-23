@@ -8,7 +8,7 @@
 Summary:	Bundled Utilities for configuring ISDN4Linux
 Name:		isdn4k-utils
 Version:	3.12
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	GPLv2
 Epoch:		1
 Group:		System/Configuration/Networking
@@ -113,6 +113,12 @@ next unit starts.
 Summary:	Main library for %{name}
 Group:		System/Libraries
 Requires:	%{name} >= %{epoch}:%{version}
+# There's a ton of non-versioned libs, plugins and development files
+# in the library package, so it needs to obsolete its old major(s)
+# In fact, if this isn't going to be fixed, there's really no point
+# versioning the lib package at all.
+# - AdamW 2008/10
+Obsoletes:	%{mklibname isdn4k-utils 2} <= 1:3.2p3-38mdv
 
 %description -n	%{libname}
 isdn4k-utils is a collection of various ISDN related utilities. This
