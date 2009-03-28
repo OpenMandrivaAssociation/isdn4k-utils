@@ -8,7 +8,7 @@
 Summary:	Bundled Utilities for configuring ISDN4Linux
 Name:		isdn4k-utils
 Version:	3.12
-Release:	%mkrel 4
+Release:	%mkrel 5
 License:	GPLv2
 Epoch:		1
 Group:		System/Configuration/Networking
@@ -34,6 +34,8 @@ Patch24:	isdn4k-utils-3.2p3-types.patch
 Patch25:	isdn4k-utils-autoconf25x.diff
 Patch26:	isdn4k-utils-cleanup.diff
 Patch27:	isdn4k-utils-openssl_des.h_fix.diff
+Patch28:	isdn4k-utils-fix-str-fmt.patch
+Patch29:	isdn4k-utils-tcl86.patch
 Requires(post): rpm-helper
 Requires(preun): rpm-helper
 BuildRequires:	autoconf2.5
@@ -189,6 +191,9 @@ perl -pi -e "s|/usr/lib/|%{_libdir}/|" pppdcapiplugin/ppp-2.*/Makefile pppdcapip
 %patch25 -p1 -b .autoconf25x
 %patch26 -p1 -b .cleanup
 %patch27 -p0 -b .openssl_des.h_fix
+
+%patch28 -p0 -b .str
+%patch29 -p0 -b .tcl86
 
 #(peroyvind) provide our own config file with correct options and paths
 install %{SOURCE1} .config
