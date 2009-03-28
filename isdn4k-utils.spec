@@ -41,7 +41,7 @@ BuildRequires:	automake
 BuildRequires:	gdbm-devel
 BuildRequires:	imake
 BuildRequires:	kernel-source
-BuildRequires:	libtcl-devel
+BuildRequires:	tcl-devel
 BuildRequires:	libtool
 BuildRequires:	libxext-devel
 BuildRequires:	libxmu-devel
