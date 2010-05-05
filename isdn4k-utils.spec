@@ -8,7 +8,7 @@
 Summary:	Bundled Utilities for configuring ISDN4Linux
 Name:		isdn4k-utils
 Version:	3.12
-Release:	%mkrel 6
+Release:	%mkrel 7
 License:	GPLv2
 Epoch:		1
 Group:		System/Configuration/Networking
@@ -37,6 +37,7 @@ Patch27:	isdn4k-utils-openssl_des.h_fix.diff
 Patch28:	isdn4k-utils-fix-str-fmt.patch
 Patch29:	isdn4k-utils-tcl86.patch
 Patch30:	isdn4k-utils-autoconf-2.6.4-quoting.patch
+Patch31:	isdn4k-utils-CVS-2010-05-01-capi.patch
 Requires(post): rpm-helper
 Requires(preun): rpm-helper
 BuildRequires:	autoconf2.5
@@ -136,9 +137,10 @@ linked with %{name}.
 %package -n	%{develname}
 Summary:	Includes and other files to develop %{name} applications
 Group:		Development/C
-Requires:	%{libname} >= %{epoch}:%{version}
+Requires:	%{libname} >= %{epoch}:%{version}-%{release}
 Provides:	lib%{name}-devel %{name}-devel
 Obsoletes:	%{mklibname %{name} -d 2}
+Conflicts:	%{_lib}isdn4k-utils3 < 1:3.12-7mdv
 
 %description -n	%{develname}
 Libraries, include files and other resources you can use to develop
@@ -196,6 +198,7 @@ perl -pi -e "s|/usr/lib/|%{_libdir}/|" pppdcapiplugin/ppp-2.*/Makefile pppdcapip
 %patch28 -p0 -b .str
 %patch29 -p0 -b .tcl86
 %patch30 -p1 -b .autoconf
+%patch31 -p1 -b .capi
 
 #(peroyvind) provide our own config file with correct options and paths
 install %{SOURCE1} .config
@@ -439,12 +442,11 @@ rm -rf %{buildroot}
 %defattr(755,root,root,755)
 %{_libdir}/libcapi*.la
 %{_libdir}/libcapi*.so.%{major}*
-# (blino) libcapi20.so filename is hardcoded in capidyn.c, used by capiplugin.so
-%attr(755,root,root) %{_libdir}/libcapi*.so
 %{_libdir}/pppd/%{pppd_ver}/*
 
 %files -n %{develname}
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libcapi*.so
 %{_libdir}/libcapi*.a
 %{_includedir}/capi*.h
 
