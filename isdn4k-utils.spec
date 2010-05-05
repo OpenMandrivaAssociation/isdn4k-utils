@@ -36,6 +36,7 @@ Patch26:	isdn4k-utils-cleanup.diff
 Patch27:	isdn4k-utils-openssl_des.h_fix.diff
 Patch28:	isdn4k-utils-fix-str-fmt.patch
 Patch29:	isdn4k-utils-tcl86.patch
+Patch30:	isdn4k-utils-autoconf-2.6.4-quoting.patch
 Requires(post): rpm-helper
 Requires(preun): rpm-helper
 BuildRequires:	autoconf2.5
@@ -194,6 +195,7 @@ perl -pi -e "s|/usr/lib/|%{_libdir}/|" pppdcapiplugin/ppp-2.*/Makefile pppdcapip
 
 %patch28 -p0 -b .str
 %patch29 -p0 -b .tcl86
+%patch30 -p1 -b .autoconf
 
 #(peroyvind) provide our own config file with correct options and paths
 install %{SOURCE1} .config
@@ -224,11 +226,9 @@ export FORCE_AUTOCONF_2_5=1
 
 for i in */configure; do
     cd `dirname $i`
-	autoreconf -fis
+	autoreconf -fi
     cd ..
 done
-
-(cd linux && ln -s /usr/include .)
 
 # workaround for automake/autoconf
 if [ -x /usr/share/automake/depcomp ] ; then
