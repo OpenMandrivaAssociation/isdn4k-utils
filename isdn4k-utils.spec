@@ -57,9 +57,13 @@ BuildRequires:	openssl-devel
 BuildRequires:	pcap-devel
 BuildRequires:	ppp
 BuildRequires:	ppp-devel
-BuildRequires:	X11-devel
-BuildRequires:	xaw-devel
-BuildRequires:	xpm-devel
+BuildRequires:	libx11-devel
+BuildRequires:	libxaw-devel
+BuildRequires:	libxext-devel
+BuildRequires:	libxmu-devel
+BuildRequires:	libxpm-devel
+BuildRequires:	libxp-devel
+BuildRequires:	libxt-devel
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
