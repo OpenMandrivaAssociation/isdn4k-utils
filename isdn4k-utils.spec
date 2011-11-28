@@ -8,7 +8,7 @@
 Summary:	Bundled Utilities for configuring ISDN4Linux
 Name:		isdn4k-utils
 Version:	3.12
-Release:	%mkrel 8
+Release:	%mkrel 9
 License:	GPLv2
 Epoch:		1
 Group:		System/Configuration/Networking
