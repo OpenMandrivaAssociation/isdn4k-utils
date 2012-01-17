@@ -8,7 +8,7 @@
 Summary:	Bundled Utilities for configuring ISDN4Linux
 Name:		isdn4k-utils
 Version:	3.12
-Release:	%mkrel 9
+Release:	10
 License:	GPLv2
 Epoch:		1
 Group:		System/Configuration/Networking
@@ -64,7 +64,6 @@ BuildRequires:	libxmu-devel
 BuildRequires:	libxpm-devel
 BuildRequires:	libxp-devel
 BuildRequires:	libxt-devel
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 isdn4k-utils is a collection of various ISDN related utilities. This
@@ -300,11 +299,9 @@ install -m755 %{SOURCE2} %{buildroot}%{_initrddir}/capi4linux
 #(peroyvind) get rid of drdsl files which are provided by other package according to Steffen Barszus
 rm -rf %{buildroot}%{_sysconfdir}/drdsl
 
-# bork
-perl -pi -e "s|^dependency_libs=.*|dependency_libs=\' -L%{_libdir}\'|g" %{buildroot}%{_libdir}/libcapi*.la
-
 # cleanup
 rm -f %{buildroot}/usr/share/doc/i4lfaq*
+rm -f %{buildroot}%{_libdir}/*.*a
 
 # hmm...
 mv %{buildroot}/sbin/* %{buildroot}%{_sbindir}/
@@ -315,25 +312,13 @@ mv %{buildroot}/sbin/* %{buildroot}%{_sbindir}/
 %preun
 %_preun_service capi4linux
 
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
-
 %post eurofile
 %_post_service eftd
 
 %preun eurofile
 %_preun_service eftd
 
-%clean
-rm -rf %{buildroot}
-
 %files
-%defattr(644,root,root,755)
 %doc README NEWS
 %dir %{_libdir}/isdn
 %dir %{_datadir}/isdn
@@ -391,7 +376,6 @@ rm -rf %{buildroot}
 %{_bindir}/capi*
 
 %files xtools
-%defattr(644,root,root,755)
 %doc xmonisdn/README
 %{_mandir}/man*/*
 %{_includedir}/X11/bitmaps/net*
@@ -401,7 +385,6 @@ rm -rf %{buildroot}
 %{_bindir}/x*
 
 %files vbox
-%defattr(644,root,root,755)
 %lang(de) %doc vbox/docs/*
 %doc vbox/examples vbox/README vbox/CHANGES
 %{_mandir}/*/*vbox*
@@ -414,7 +397,6 @@ rm -rf %{buildroot}
 %{_sbindir}/vbox*
 
 %files eurofile
-%defattr(644,root,root,755)
 %doc eurofile/doc/[!R]*[!5] eurofile/COPYING* eurofile/CHANGES eurofile/README* eurofile/TODO
 %{_mandir}/man5/eft*.5*
 %config(noreplace) %{_sysconfdir}/isdn/eft.conf
@@ -424,7 +406,6 @@ rm -rf %{buildroot}
 %{_bindir}/eftp
 
 %files isdnlog
-%defattr(644,root,root,755)
 %doc isdnlog/BUGS isdnlog/README.* isdnlog/CREDITS isdnlog/FAQ isdnlog/NEWS isdnlog/TODO
 %config(noreplace) %{_sysconfdir}/isdn/isdnlog.*
 %{_mandir}/man1/isdn*
@@ -441,17 +422,13 @@ rm -rf %{buildroot}
 %config(noreplace) %{_sysconfdir}/isdn/stop
 
 %files -n %{libname}
-%defattr(644,root,root,755)
 %doc COPYING README NEWS
 %defattr(755,root,root,755)
-%{_libdir}/libcapi*.la
 %{_libdir}/libcapi*.so.%{major}*
 %{_libdir}/pppd/%{pppd_ver}/*
 
 %files -n %{develname}
-%defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libcapi*.so
-%{_libdir}/libcapi*.a
 %{_includedir}/capi*.h
 
 %files doc
