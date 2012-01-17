@@ -444,6 +444,7 @@ mv %{buildroot}/sbin/* %{buildroot}%{_sbindir}/
 %{_mandir}/man5/callerid.conf.5*
 %{_mandir}/man5/isdn.conf.5*
 %{_mandir}/man5/isdnformat.5*
+%{_mandir}/man5/isdnlog.5*
 %{_mandir}/man5/isdnlog.users.5*
 %{_mandir}/man5/rate-files.5*
 %{_mandir}/man8/isdnlog.8*
