@@ -40,13 +40,11 @@ Patch30:	isdn4k-utils-autoconf-2.6.4-quoting.patch
 Patch31:	isdn4k-utils-CVS-2010-05-01-capi.patch
 Requires(post): rpm-helper
 Requires(preun): rpm-helper
-BuildRequires:	autoconf2.5
-BuildRequires:	automake
+BuildRequires:	autoconf automake libtool
 BuildRequires:	gdbm-devel
 BuildRequires:	imake
 BuildRequires:	kernel-source
 BuildRequires:	tcl-devel
-BuildRequires:	libtool
 BuildRequires:	libxext-devel
 BuildRequires:	libxmu-devel
 BuildRequires:	libxp-devel
@@ -336,24 +334,6 @@ mv %{buildroot}/sbin/* %{buildroot}%{_sbindir}/
 %config(noreplace) %{_sysconfdir}/isdn/callerid.conf
 %config(noreplace) %{_sysconfdir}/isdn/rate.conf
 #%config(noreplace) %{_sysconfdir}/ppp/ioptions
-%{_mandir}/man4/*
-%{_mandir}/man7/isdn_cause.7*
-%{_mandir}/man8/avmcapictrl.8*
-%{_mandir}/man*/capi*
-%{_mandir}/man8/icnctrl.8*
-%{_mandir}/man8/imon.8*
-%{_mandir}/man8/imontty.8*
-%{_mandir}/man8/ipppd.8*
-%{_mandir}/man8/ipppstats.8*
-%{_mandir}/man8/iprofd.8*
-%{_mandir}/man8/isdnctrl.8*
-%{_mandir}/man8/isdnctrl_conf.8*
-%{_mandir}/man8/loopctrl.8*
-%{_mandir}/man8/pcbitctl.8*
-%{_mandir}/man8/eiconctrl.8*
-%{_mandir}/man8/hisaxctrl.8*
-%{_mandir}/man8/divertctrl.8*
-%{_mandir}/man8/actctrl.8*
 %defattr(755,root,root,755)
 %{_initrddir}/capi4linux
 %{_sbindir}/avmcapictrl
@@ -374,20 +354,43 @@ mv %{buildroot}/sbin/* %{buildroot}%{_sbindir}/
 %{_sbindir}/eiconctrl
 %{_sbindir}/divertctrl
 %{_bindir}/capi*
+%{_mandir}/man4/isdn_audio.4*
+%{_mandir}/man4/isdnctrl.4*
+%{_mandir}/man4/isdninfo.4*
+%{_mandir}/man4/ttyI.4*
+%{_mandir}/man5/rate.conf.5*
+%{_mandir}/man7/isdn_cause.7*
+%{_mandir}/man8/actctrl.8*
+%{_mandir}/man8/avmcapictrl.8*
+%{_mandir}/man8/capiinfo.8*
+%{_mandir}/man8/capiplugin.8*
+%{_mandir}/man8/divertctrl.8*
+%{_mandir}/man8/eiconctrl.8*
+%{_mandir}/man8/hisaxctrl.8*
+%{_mandir}/man8/icnctrl.8*
+%{_mandir}/man8/imon.8*
+%{_mandir}/man8/imontty.8*
+%{_mandir}/man8/ipppd.8*
+%{_mandir}/man8/ipppstats.8*
+%{_mandir}/man8/iprofd.8*
+%{_mandir}/man8/isdnctrl.8*
+%{_mandir}/man8/isdnctrl_conf.8*
+%{_mandir}/man8/loopctrl.8*
+%{_mandir}/man8/pcbitctl.8*
 
 %files xtools
 %doc xmonisdn/README
-%{_mandir}/man*/*
 %{_includedir}/X11/bitmaps/net*
 #%{_prefix}/X11R6/lib/X11/doc/html/*.html
 %config(noreplace) %{_sysconfdir}/X11/app-defaults/XISDNLoad
 %defattr(755,root,root,755)
 %{_bindir}/x*
+%{_mandir}/man1/xisdnload.1x.*
+%{_mandir}/man1/xmonisdn.1x.*
 
 %files vbox
 %lang(de) %doc vbox/docs/*
 %doc vbox/examples vbox/README vbox/CHANGES
-%{_mandir}/*/*vbox*
 %dir /var/spool/vbox
 %dir /var/log/vbox
 %config(noreplace) %{_sysconfdir}/isdn/vboxgetty.conf
@@ -395,31 +398,56 @@ mv %{buildroot}/sbin/* %{buildroot}%{_sbindir}/
 %defattr(755,root,root,755)
 %{_bindir}/*vbox*
 %{_sbindir}/vbox*
+%{_mandir}/man1/vbox.1*
+%{_mandir}/man1/vboxconvert.1*
+%{_mandir}/man1/vboxctrl.1*
+%{_mandir}/man1/vboxmode.1*
+%{_mandir}/man1/vboxplay.1*
+%{_mandir}/man1/vboxtoau.1*
+%{_mandir}/man5/vbox.conf.5*
+%{_mandir}/man5/vboxd.conf.5*
+%{_mandir}/man5/vbox_file.5*
+%{_mandir}/man5/vboxgetty.conf.5*
+%{_mandir}/man5/vboxrc.5*
+%{_mandir}/man5/vboxtcl.5*
+%{_mandir}/man8/vboxd.8*
+%{_mandir}/man8/vboxgetty.8*
+%{_mandir}/man8/vboxmail.8*
+%{_mandir}/man8/vboxputty.8*
 
 %files eurofile
 %doc eurofile/doc/[!R]*[!5] eurofile/COPYING* eurofile/CHANGES eurofile/README* eurofile/TODO
-%{_mandir}/man5/eft*.5*
 %config(noreplace) %{_sysconfdir}/isdn/eft.conf
 %defattr(755,root,root,755)
 %config(noreplace) %{_initrddir}/eftd
 %{_sbindir}/eftd
 %{_bindir}/eftp
+%{_mandir}/man5/eftaccess.5*
+%{_mandir}/man5/efthosts.5*
+%{_mandir}/man5/eft_wuauth.5*
+%{_mandir}/man5/eft_xferlog.5*
 
 %files isdnlog
 %doc isdnlog/BUGS isdnlog/README.* isdnlog/CREDITS isdnlog/FAQ isdnlog/NEWS isdnlog/TODO
 %config(noreplace) %{_sysconfdir}/isdn/isdnlog.*
-%{_mandir}/man1/isdn*
-%{_mandir}/man5/isdnlog*.5*
-%{_mandir}/man5/isdn.conf.5*
-%{_mandir}/man5/callerid.conf.5*
-%{_mandir}/man5/isdnformat.5*
-%{_mandir}/man5/rate-files.5*
-%{_mandir}/man8/isdnlog.8*
 %defattr(755,root,root,755)
 %{_sbindir}/isdnlog
 %{_sbindir}/mkzonedb
 %{_bindir}/isdn*
 %config(noreplace) %{_sysconfdir}/isdn/stop
+%{_mandir}/man1/autovbox.1*
+%{_mandir}/man1/isdnbill.1*
+%{_mandir}/man1/isdnconf.1*
+%{_mandir}/man1/isdnrate.1*
+%{_mandir}/man1/isdnrep.1*
+%{_mandir}/man1/rmdtovbox.1*
+%{_mandir}/man5/callerid.conf.5*
+%{_mandir}/man5/isdn.conf.5*
+%{_mandir}/man5/isdnformat.5*
+%{_mandir}/man5/isdnlog.users.5*
+%{_mandir}/man5/rate-files.5*
+%{_mandir}/man8/isdnlog.8*
+%{_mandir}/man8/mkzonedb.8*
 
 %files -n %{libname}
 %doc COPYING README NEWS
