@@ -1,0 +1,40 @@
+--- isdn4k-utils/capi20/configure.in~	2000-11-12 17:06:42.000000000 +0100
++++ isdn4k-utils/capi20/configure.in	2004-06-09 08:14:53.572435244 +0200
+@@ -13,7 +13,6 @@ AC_SUBST(LIBTOOL_DEPS)
+ dnl Checks for header files.
+ AC_HEADER_STDC
+ AC_CHECK_HEADERS(fcntl.h sys/ioctl.h unistd.h)
+-AC_CHECK_HEADERS(linux/capi.h)
+ 
+ dnl Checks for library functions.
+ AC_CHECK_FUNCS(select)
+--- isdn4k-utils/capiinfo/configure.in~	2002-07-19 23:23:51.000000000 +0200
++++ isdn4k-utils/capiinfo/configure.in	2004-06-09 08:15:25.807502316 +0200
+@@ -15,12 +15,6 @@ AC_PROG_CC
+ 
+ dnl Checks for libraries.
+ 
+-dnl Checks for header files.
+-AC_HEADER_STDC
+-AC_CHECK_HEADERS(linux/capi.h,,
+-	[AC_MSG_ERROR([Missing $ac_hdr. Kernel source installed?])])
+-dnl not used AC_CHECK_HEADERS(capi20.h)
+-
+ dnl Checks for typedefs, structures, and compiler characteristics.
+ 
+ dnl Optional sbin directory
+--- isdn4k-utils/capiinit/configure.in.nocheck	2002-07-06 02:11:17.000000000 +0200
++++ isdn4k-utils/capiinit/configure.in	2004-06-09 08:15:57.936566835 +0200
+@@ -9,12 +9,6 @@ AC_PROG_CC
+ 
+ dnl Checks for libraries.
+ 
+-dnl Checks for header files.
+-AC_HEADER_STDC
+-AC_CHECK_HEADERS(linux/capi.h,,
+-	[AC_MSG_ERROR([Missing $ac_hdr. Kernel source installed?])])
+-AC_CHECK_HEADERS(capi20.h)
+-
+ dnl Checks for typedefs, structures, and compiler characteristics.
+ 
+ AC_SUBST(INSTALL)

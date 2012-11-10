@@ -1,0 +1,10 @@
+--- isdn4k-utils/capi20/capi20.h.types	2007-11-26 14:13:00.000000000 +0100
++++ isdn4k-utils/capi20/capi20.h	2009-03-28 09:03:31.000000000 +0100
+@@ -29,6 +29,7 @@
+ 
+ #include <stdlib.h>
+ #include <sys/time.h>
++#include <sys/types.h>
+ 
+ /* standard CAPI2.0 functions */
+ 

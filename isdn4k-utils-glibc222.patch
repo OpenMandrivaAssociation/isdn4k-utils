@@ -1,0 +1,10 @@
+--- isdn4k-utils/xisdnload/xisdnload.c.ooo	2005-09-30 13:41:51.000000000 +0200
++++ isdn4k-utils/xisdnload/xisdnload.c	2009-03-28 08:43:34.000000000 +0100
+@@ -39,6 +39,7 @@
+ #include <sys/fcntl.h>
+ #include <stdlib.h>
+ #include <unistd.h>
++#include <time.h>
+ #include <stdio.h>
+ #include <sys/time.h>
+ #include <time.h>

@@ -1,0 +1,11 @@
+--- isdn4k-utils/Makefile.lib64	2004-03-11 13:50:38.000000000 +0100
++++ isdn4k-utils/Makefile	2004-03-11 13:59:51.000000000 +0100
+@@ -203,7 +203,7 @@ subconfig: scripts/autoconf.h
+ 	@set -e; for i in `echo $(BUILD_ONLY) $(SUBDIRS)`; do \
+ 		if [ -x $$i/configure ] ; then \
+ 			/bin/echo -e "\nRunning configure in $$i ...\n"; sleep 1; \
+-			(cd $$i; ./configure --sbindir=$(CONFIG_SBINDIR) --bindir=$(CONFIG_BINDIR) --mandir=$(CONFIG_MANDIR) --datadir=$(CONFIG_DATADIR) || $(MAKE) -C ../ ERRDIR=$$i cfgerror); \
++			(cd $$i; ./configure --sbindir=$(CONFIG_SBINDIR) --bindir=$(CONFIG_BINDIR) --libdir=$(LIBDIR) --mandir=$(CONFIG_MANDIR) --datadir=$(CONFIG_DATADIR) || $(MAKE) -C ../ ERRDIR=$$i cfgerror); \
+ 		elif [ -f $$i/Makefile.in ] ; then \
+ 			/bin/echo -e "\nRunning make -f Makefile.in config in $$i ...\n"; sleep 1; \
+ 			$(MAKE) -C $$i -f Makefile.in config; \

@@ -1,0 +1,436 @@
+diff -Naur isdn4k-utils/act2000/Makefile.in isdn4k-utils.oden/act2000/Makefile.in
+--- isdn4k-utils/act2000/Makefile.in	2002-07-19 21:03:49.000000000 +0200
++++ isdn4k-utils.oden/act2000/Makefile.in	2008-08-20 15:08:08.000000000 +0200
+@@ -18,9 +18,9 @@
+ MANDIR			= @CONFIG_MANDIR@
+ MAN8DIR			= $(MANDIR)/man8
+ INSTALL			= @INSTALL@
+-INSTALL_PROGRAM	= $(INSTALL) -o 0 -g 0 -m 0750
+-INSTALL_DATA	= $(INSTALL) -o 0 -g 0 -m 0644
+-INSTALL_MAN		= $(INSTALL) -o 0 -g 0 -m 0644
++INSTALL_PROGRAM	= $(INSTALL) -m 0750
++INSTALL_DATA	= $(INSTALL) -m 0644
++INSTALL_MAN		= $(INSTALL) -m 0644
+ prefix			= @prefix@
+ exec_prefix		= @exec_prefix@
+ CC				= @CC@
+diff -Naur isdn4k-utils/areacode/Makefile.in isdn4k-utils.oden/areacode/Makefile.in
+--- isdn4k-utils/areacode/Makefile.in	1999-06-19 11:39:59.000000000 +0200
++++ isdn4k-utils.oden/areacode/Makefile.in	2008-08-20 15:08:08.000000000 +0200
+@@ -12,7 +12,7 @@
+ 	# only ones that _really_ exist on _every_ system.
+ 	#
+ 	BUILDOPTS   := $(DATAOPTS)
+-	INSTALLOPTS := $(DATAOPTS) INSTALL="install -o 0 -g 0 -m 644"
++	INSTALLOPTS := $(DATAOPTS) INSTALL="install -m 644"
+ endif
+ 
+ all: .depend
+diff -Naur isdn4k-utils/avmb1/Makefile.in isdn4k-utils.oden/avmb1/Makefile.in
+--- isdn4k-utils/avmb1/Makefile.in	2002-07-19 21:03:50.000000000 +0200
++++ isdn4k-utils.oden/avmb1/Makefile.in	2008-08-20 15:08:08.000000000 +0200
+@@ -15,8 +15,8 @@
+ MANDIR			= @CONFIG_MANDIR@
+ MAN8DIR			= $(MANDIR)/man8
+ INSTALL			= @INSTALL@
+-INSTALL_PROGRAM	= $(INSTALL) -o 0 -g 0 -m 0750
+-INSTALL_MAN		= $(INSTALL) -o 0 -g 0 -m 0644
++INSTALL_PROGRAM	= $(INSTALL) -m 0750
++INSTALL_MAN		= $(INSTALL) -m 0644
+ prefix			= @prefix@
+ exec_prefix		= @exec_prefix@
+ CC				= @CC@
+diff -Naur isdn4k-utils/divertctrl/Makefile.in isdn4k-utils.oden/divertctrl/Makefile.in
+--- isdn4k-utils/divertctrl/Makefile.in	2002-07-19 21:03:51.000000000 +0200
++++ isdn4k-utils.oden/divertctrl/Makefile.in	2008-08-20 15:08:08.000000000 +0200
+@@ -13,8 +13,8 @@
+ MODULES			= divertctrl.o
+ MANPAGE			= divertctrl.8
+ INSTALL			= @INSTALL@
+-INSTALL_PROGRAM	= $(INSTALL) -o 0 -g 0 -m 0750
+-INSTALL_MAN		= $(INSTALL) -o 0 -g 0 -m 0644
++INSTALL_PROGRAM	= $(INSTALL) -m 0750
++INSTALL_MAN		= $(INSTALL) -m 0644
+ prefix			= @prefix@
+ exec_prefix		= @exec_prefix@
+ ifeq (../.config,$(wildcard ../.config))
+diff -Naur isdn4k-utils/doc/Makefile.in isdn4k-utils.oden/doc/Makefile.in
+--- isdn4k-utils/doc/Makefile.in	1999-12-24 15:14:50.000000000 +0100
++++ isdn4k-utils.oden/doc/Makefile.in	2008-08-20 15:08:08.000000000 +0200
+@@ -9,7 +9,7 @@
+ SED				= @SED@
+ MANDIR			= @CONFIG_MANDIR@
+ MANPAGES		= ttyI.4 isdninfo.4 isdn_audio.4 isdnctrl.4 isdn_cause.7
+-INSTALL_MAN		= @INSTALL@ -o 0 -g 0 -m 0644
++INSTALL_MAN		= @INSTALL@ -m 0644
+ prefix			= @prefix@
+ 
+ %.1: %.man
+diff -Naur isdn4k-utils/eicon/Makefile.in isdn4k-utils.oden/eicon/Makefile.in
+--- isdn4k-utils/eicon/Makefile.in	2005-02-21 18:52:03.000000000 +0100
++++ isdn4k-utils.oden/eicon/Makefile.in	2008-08-20 15:08:08.000000000 +0200
+@@ -23,9 +23,9 @@
+ DATA_DIR		= @CONFIG_DATADIR@
+ MANDIR			= @CONFIG_MANDIR@
+ MAN8DIR			= $(MANDIR)/man8
+-INSTALL_PROGRAM	= $(INSTALL) -o 0 -g 0 -m 0750
+-INSTALL_DATA	= $(INSTALL) -o 0 -g 0 -m 0644
+-INSTALL_MAN		= $(INSTALL) -o 0 -g 0 -m 0644
++INSTALL_PROGRAM	= $(INSTALL) -m 0750
++INSTALL_DATA	= $(INSTALL) -m 0644
++INSTALL_MAN		= $(INSTALL) -m 0644
+ CC				= @CC@
+ COPTS			= -DDATADIR=\"$(shell echo $(DESTDIR)$(DATA_DIR))\"
+ 
+diff -Naur isdn4k-utils/hisax/Makefile.in isdn4k-utils.oden/hisax/Makefile.in
+--- isdn4k-utils/hisax/Makefile.in	2002-07-19 21:03:51.000000000 +0200
++++ isdn4k-utils.oden/hisax/Makefile.in	2008-08-20 15:08:08.000000000 +0200
+@@ -16,9 +16,9 @@
+ DATADIR			= @CONFIG_DATADIR@
+ MANDIR			= @CONFIG_MANDIR@
+ MAN8DIR			= $(MANDIR)/man8
+-INSTALL_PROGRAM	= $(INSTALL) -o 0 -g 0 -m 0750
+-INSTALL_DATA	= $(INSTALL) -o 0 -g 0 -m 0644
+-INSTALL_MAN		= $(INSTALL) -o 0 -g 0 -m 0644
++INSTALL_PROGRAM	= $(INSTALL) -m 0750
++INSTALL_DATA	= $(INSTALL) -m 0644
++INSTALL_MAN		= $(INSTALL) -m 0644
+ prefix			= @prefix@
+ exec_prefix		= @exec_prefix@
+ ifeq ("@CONFIG_HISAXCTRL@","y")
+diff -Naur isdn4k-utils/icn/Makefile.in isdn4k-utils.oden/icn/Makefile.in
+--- isdn4k-utils/icn/Makefile.in	2002-07-19 21:03:52.000000000 +0200
++++ isdn4k-utils.oden/icn/Makefile.in	2008-08-20 15:08:08.000000000 +0200
+@@ -17,9 +17,9 @@
+ DATADIR			= @CONFIG_DATADIR@
+ MANDIR			= @CONFIG_MANDIR@
+ MAN8DIR			= $(MANDIR)/man8
+-INSTALL_PROGRAM	= $(INSTALL) -o 0 -g 0 -m 0750
+-INSTALL_DATA	= $(INSTALL) -o 0 -g 0 -m 0644
+-INSTALL_MAN		= $(INSTALL) -o 0 -g 0 -m 0644
++INSTALL_PROGRAM	= $(INSTALL) -m 0750
++INSTALL_DATA	= $(INSTALL) -m 0644
++INSTALL_MAN		= $(INSTALL) -m 0644
+ CC				= @CC@
+ COPTS			=
+ 
+diff -Naur isdn4k-utils/imon/Makefile.in isdn4k-utils.oden/imon/Makefile.in
+--- isdn4k-utils/imon/Makefile.in	2002-07-19 21:03:53.000000000 +0200
++++ isdn4k-utils.oden/imon/Makefile.in	2008-08-20 15:08:08.000000000 +0200
+@@ -18,8 +18,8 @@
+ SBINDIR			= @CONFIG_SBINDIR@
+ MAN8DIR			= $(MANDIR)/man8
+ INSTALL			= @INSTALL@
+-INSTALL_PROGRAM	= $(INSTALL) -o 0 -g 0 -m 0750
+-INSTALL_MAN		= $(INSTALL) -o 0 -g 0 -m 0644
++INSTALL_PROGRAM	= $(INSTALL) -m 0750
++INSTALL_MAN		= $(INSTALL) -m 0644
+ prefix			= @prefix@
+ exec_prefix		= @exec_prefix@
+ CC				= @CC@
+diff -Naur isdn4k-utils/imontty/Makefile isdn4k-utils.oden/imontty/Makefile
+--- isdn4k-utils/imontty/Makefile	2006-01-15 16:08:55.000000000 +0100
++++ isdn4k-utils.oden/imontty/Makefile	2008-08-20 15:08:08.000000000 +0200
+@@ -19,7 +19,7 @@
+ endif
+ 
+ INSTALL=install
+-INSTALL_MAN=$(INSTALL) -o 0 -g 0 -m 0644
++INSTALL_MAN=$(INSTALL) -m 0644
+ MANPAGE=imontty.8
+ 
+ CCFLAGS=-O2
+@@ -52,10 +52,10 @@
+ 	mkdir -p $(DESTDIR)$(MAN8DIR)
+ 	$(INSTALL_MAN) $< $(DESTDIR)$(MAN8DIR)/$(MANPAGE)
+ 
+-install: $(PROGS) rootperm install-man
+-	install -s -o 0 -g 0 -m 0755 $(PROGS) $(DESTDIR)$(CONFIG_SBINDIR)
++install: $(PROGS) install-man
++	install -s -m 0755 $(PROGS) $(DESTDIR)$(CONFIG_SBINDIR)
+ 
+-uninstall: rootperm
++uninstall:
+ 	for i in $(PROGS) ; do rm -f $(DESTDIR)$(CONFIG_SBINDIR)/$$i; done
+ 
+ clean:
+diff -Naur isdn4k-utils/ipppd/Makefile.in isdn4k-utils.oden/ipppd/Makefile.in
+--- isdn4k-utils/ipppd/Makefile.in	2006-01-15 16:11:52.000000000 +0100
++++ isdn4k-utils.oden/ipppd/Makefile.in	2008-08-20 15:08:08.000000000 +0200
+@@ -15,10 +15,10 @@
+ MANDIR        := @CONFIG_MANDIR@
+ CC            := @CC@
+ INSTALL       := @INSTALL@
+-INSTALL_DIR   := $(INSTALL) -m 0755 -o 0 -g 0 -d
+-INSTALL_SBIN  := $(INSTALL) -m 0700 -o 0 -g 0
+-INSTALL_BIN   := $(INSTALL) -m 0755 -o 0 -g 0
+-INSTALL_DATA  := $(INSTALL) -m 0644 -o 0 -g 0
++INSTALL_DIR   := $(INSTALL) -m 0755 -d
++INSTALL_SBIN  := $(INSTALL) -m 0700
++INSTALL_BIN   := $(INSTALL) -m 0755
++INSTALL_DATA  := $(INSTALL) -m 0644
+ RADIUS_CLIENT_CONFIG_FILE := @RADIUS_CLIENT_CONFIG_FILE@
+ 
+ ifeq (@CONFIG_IPPPD_MSCHAP@,y)
+diff -Naur isdn4k-utils/ipppstats/Makefile.in isdn4k-utils.oden/ipppstats/Makefile.in
+--- isdn4k-utils/ipppstats/Makefile.in	2002-07-19 21:03:54.000000000 +0200
++++ isdn4k-utils.oden/ipppstats/Makefile.in	2008-08-20 15:08:08.000000000 +0200
+@@ -6,9 +6,9 @@
+ MANDIR       = @CONFIG_MANDIR@
+ CC           = @CC@
+ INSTALL      = @INSTALL@
+-INSTALL_SBIN = $(INSTALL) -m 755 -o 0 -g 0
+-INSTALL_DATA = $(INSTALL) -m 644 -o 0 -g 0
+-INSTALL_DIR  = $(INSTALL) -m 755 -o 0 -g 0 -d
++INSTALL_SBIN = $(INSTALL) -m 755
++INSTALL_DATA = $(INSTALL) -m 644
++INSTALL_DIR  = $(INSTALL) -m 755 -d
+ 
+ PPPSTATSRCS  = ipppstats.c
+ PPPSTATOBJS  = ipppstats.o
+diff -Naur isdn4k-utils/iprofd/Makefile.in isdn4k-utils.oden/iprofd/Makefile.in
+--- isdn4k-utils/iprofd/Makefile.in	2002-07-19 23:23:53.000000000 +0200
++++ isdn4k-utils.oden/iprofd/Makefile.in	2008-08-20 15:08:08.000000000 +0200
+@@ -15,8 +15,8 @@
+ MANDIR			= @CONFIG_MANDIR@
+ MAN8DIR			= $(MANDIR)/man8
+ INSTALL			= @INSTALL@
+-INSTALL_PROGRAM	= $(INSTALL) -o 0 -g 0 -m 0750
+-INSTALL_MAN		= $(INSTALL) -o 0 -g 0 -m 0644
++INSTALL_PROGRAM	= $(INSTALL) -m 0750
++INSTALL_MAN		= $(INSTALL) -m 0644
+ prefix			= @prefix@
+ exec_prefix		= @exec_prefix@
+ CC				= @CC@
+diff -Naur isdn4k-utils/isdnctrl/Makefile.in isdn4k-utils.oden/isdnctrl/Makefile.in
+--- isdn4k-utils/isdnctrl/Makefile.in	2002-07-19 23:23:54.000000000 +0200
++++ isdn4k-utils.oden/isdnctrl/Makefile.in	2008-08-20 15:08:08.000000000 +0200
+@@ -15,8 +15,8 @@
+ MANDIR			= @CONFIG_MANDIR@
+ MAN8DIR			= $(MANDIR)/man8
+ INSTALL			= @INSTALL@
+-INSTALL_PROGRAM	= $(INSTALL) -o 0 -g 0 -m 0750
+-INSTALL_MAN		= $(INSTALL) -o 0 -g 0 -m 0644
++INSTALL_PROGRAM	= $(INSTALL) -m 0750
++INSTALL_MAN		= $(INSTALL) -m 0644
+ CC				= @CC@ -DVERSION=\"@I4LVERSION@\"
+ prefix			= @prefix@
+ exec_prefix		= @exec_prefix@
+diff -Naur isdn4k-utils/isdnlog/Makefile.in isdn4k-utils.oden/isdnlog/Makefile.in
+--- isdn4k-utils/isdnlog/Makefile.in	2007-01-05 05:23:57.000000000 +0100
++++ isdn4k-utils.oden/isdnlog/Makefile.in	2008-08-20 15:08:19.000000000 +0200
+@@ -1655,10 +1655,10 @@
+ # autoconf isdnlog specific stuff
+ #
+ INSTALL			:= @INSTALL@
+-INSTALL_DIR		:= $(INSTALL) -m 0755 -o 0 -g 0 -d
+-INSTALL_SBIN		:= $(INSTALL) -m 0700 -o 0 -g 0
+-INSTALL_BIN		:= $(INSTALL) -m 0755 -o 0 -g 0
+-INSTALL_DATA		:= $(INSTALL) -m 0644 -o 0 -g 0
++INSTALL_DIR		:= $(INSTALL) -m 0755 -d
++INSTALL_SBIN		:= $(INSTALL) -m 0700
++INSTALL_BIN		:= $(INSTALL) -m 0755
++INSTALL_DATA		:= $(INSTALL) -m 0644
+ 
+ BZIP2                   := @BZIP2@
+ BUNZIP2                 := $(BZIP2) -f -d
+@@ -2036,7 +2036,7 @@
+ 	fi
+ endif
+ 
+-uninstall: rootperm
++uninstall:
+ 		if ps x | fgrep $(ISDNLOG) >/dev/null; then kill `cat $(RUNDIR)/isdnlog.isdnctrl0.pid` 2>/dev/null; fi
+ 		rm -f	$(DESTDIR)$(SBINDIR)/$(ISDNLOG) \
+ 			$(DESTDIR)$(BINDIR)/$(ISDNREP)	\
+@@ -2058,7 +2058,7 @@
+ 			$(DESTDIR)$(DATADIR)/dest.cdb
+ 
+ 
+-installdirs: rootperm
++installdirs:
+ 		$(INSTALL_DIR) $(DESTDIR)$(I4LCONFDIR)
+ 		$(INSTALL_DIR) $(DESTDIR)$(BINDIR)
+ 		$(INSTALL_DIR) $(DESTDIR)$(SBINDIR)
+@@ -2067,7 +2067,7 @@
+ 		$(INSTALL_DIR) $(DESTDIR)$(MAN8DIR)
+ 		$(INSTALL_DIR) $(DESTDIR)$(DATADIR)
+ 
+-install: all rootperm installdirs install-conf install-data install-progs
++install: all installdirs install-conf install-data install-progs
+ 
+ install-old-conf:
+ 		@if [ -n "$(DESTDIR)$(OLDCONFDIR)" -a "$(DESTDIR)$(OLDCONFDIR)" != '/' ] ; then \
+diff -Naur isdn4k-utils/isdnlog/tools/dest/Makefile.in isdn4k-utils.oden/isdnlog/tools/dest/Makefile.in
+--- isdn4k-utils/isdnlog/tools/dest/Makefile.in	2006-02-12 17:16:37.000000000 +0100
++++ isdn4k-utils.oden/isdnlog/tools/dest/Makefile.in	2008-08-20 15:08:08.000000000 +0200
+@@ -20,9 +20,9 @@
+ SBINDIR			= @CONFIG_SBINDIR@
+ MAN8DIR			= $(MANDIR)/man8
+ INSTALL			= @INSTALL@
+-INSTALL_PROGRAM		= $(INSTALL) -o 0 -g 0 -m 0750
+-INSTALL_MAN		= $(INSTALL) -o 0 -g 0 -m 0644
+-INSTALL_DATA		= $(INSTALL) -o 0 -g 0 -m 0644
++INSTALL_PROGRAM		= $(INSTALL) -m 0750
++INSTALL_MAN		= $(INSTALL) -m 0644
++INSTALL_DATA		= $(INSTALL) -m 0644
+ prefix			= @prefix@
+ exec_prefix		= @exec_prefix@
+ DATADIR			= @datadir@
+diff -Naur isdn4k-utils/isdnlog/tools/telrate/Makefile.in isdn4k-utils.oden/isdnlog/tools/telrate/Makefile.in
+--- isdn4k-utils/isdnlog/tools/telrate/Makefile.in	1999-12-24 15:17:08.000000000 +0100
++++ isdn4k-utils.oden/isdnlog/tools/telrate/Makefile.in	2008-08-20 15:08:08.000000000 +0200
+@@ -8,8 +8,8 @@
+ CGIDIR		= @CGIDIR@
+ TELDIR		= @TELDIR@
+ INSTALL		= @INSTALL@
+-INSTALL_PROGRAM	= $(INSTALL) -o 0 -g 0 -m 0755
+-INSTALL_FILE	= $(INSTALL) -o 0 -g 0 -m 0644
++INSTALL_PROGRAM	= $(INSTALL) -m 0755
++INSTALL_FILE	= $(INSTALL) -m 0644
+ 
+ FILES = index.html info.html *.jpg *.gif tt.js
+ 
+diff -Naur isdn4k-utils/isdnlog/tools/zone/Makefile.in isdn4k-utils.oden/isdnlog/tools/zone/Makefile.in
+--- isdn4k-utils/isdnlog/tools/zone/Makefile.in	2004-12-10 19:26:15.000000000 +0100
++++ isdn4k-utils.oden/isdnlog/tools/zone/Makefile.in	2008-08-20 15:08:08.000000000 +0200
+@@ -20,8 +20,8 @@
+ SBINDIR			= @CONFIG_SBINDIR@
+ MAN8DIR			= $(MANDIR)/man8
+ INSTALL			= @INSTALL@
+-INSTALL_PROGRAM		= $(INSTALL) -o 0 -g 0 -m 0750
+-INSTALL_MAN		= $(INSTALL) -o 0 -g 0 -m 0644
++INSTALL_PROGRAM		= $(INSTALL) -m 0750
++INSTALL_MAN		= $(INSTALL) -m 0644
+ prefix			= @prefix@
+ exec_prefix		= @exec_prefix@
+ #CC			= @CC@ -V2.7.2.3
+diff -Naur isdn4k-utils/lib/Makefile.in isdn4k-utils.oden/lib/Makefile.in
+--- isdn4k-utils/lib/Makefile.in	1999-12-12 18:22:36.000000000 +0100
++++ isdn4k-utils.oden/lib/Makefile.in	2008-08-20 15:08:08.000000000 +0200
+@@ -11,7 +11,7 @@
+ 	# Install as root with numeric Id's, since these are the
+ 	# only ones that _really_ exist on _every_ system.
+ 	#
+-	INSTALLOPTS += INSTALL= install -o 0 -g 0 -m 644
++	INSTALLOPTS += INSTALL= install -m 644
+ endif
+ 
+ all: .depend
+diff -Naur isdn4k-utils/loop/Makefile.in isdn4k-utils.oden/loop/Makefile.in
+--- isdn4k-utils/loop/Makefile.in	2002-07-19 21:03:56.000000000 +0200
++++ isdn4k-utils.oden/loop/Makefile.in	2008-08-20 15:08:08.000000000 +0200
+@@ -13,8 +13,8 @@
+ MODULES			= loopctrl.o
+ MANPAGE			= loopctrl.8
+ INSTALL			= @INSTALL@
+-INSTALL_PROGRAM	= $(INSTALL) -o 0 -g 0 -m 0750
+-INSTALL_MAN		= $(INSTALL) -o 0 -g 0 -m 0644
++INSTALL_PROGRAM	= $(INSTALL) -m 0750
++INSTALL_MAN		= $(INSTALL) -m 0644
+ prefix			= @prefix@
+ exec_prefix		= @exec_prefix@
+ ifeq (../.config,$(wildcard ../.config))
+diff -Naur isdn4k-utils/Makefile isdn4k-utils.oden/Makefile
+--- isdn4k-utils/Makefile	2007-11-26 14:13:44.000000000 +0100
++++ isdn4k-utils.oden/Makefile	2008-08-20 15:08:06.000000000 +0200
+@@ -130,7 +130,7 @@
+ 		exit 1; \
+ 	fi
+ 
+-install: rootperm
++install:
+ 	set -e; for i in `echo $(SUBDIRS)`; do $(MAKE) -C $$i install; done
+ 	@if [ -c $(DESTDIR)/dev/isdnctrl0 ] && ls -l $(DESTDIR)/dev/isdnctrl0 | egrep "[[:space:]]45,[[:space:]]+64[[:space:]]" > /dev/null; \
+ 	then \
+@@ -139,7 +139,7 @@
+ 		sh scripts/makedev.sh $(DESTDIR) ; \
+ 	fi
+ 
+-uninstall: rootperm
++uninstall:
+ 	set -e; for i in `echo $(SUBDIRS)`; do $(MAKE) -C $$i uninstall; done
+ 
+ #
+diff -Naur isdn4k-utils/pcbit/Makefile.in isdn4k-utils.oden/pcbit/Makefile.in
+--- isdn4k-utils/pcbit/Makefile.in	2002-07-19 21:03:57.000000000 +0200
++++ isdn4k-utils.oden/pcbit/Makefile.in	2008-08-20 15:08:08.000000000 +0200
+@@ -15,8 +15,8 @@
+ MANDIR			= @CONFIG_MANDIR@
+ MAN8DIR			= $(MANDIR)/man8
+ INSTALL			= @INSTALL@
+-INSTALL_PROGRAM		= $(INSTALL) -o 0 -g 0 -m 0750
+-INSTALL_MAN		= $(INSTALL) -o 0 -g 0 -m 0644
++INSTALL_PROGRAM		= $(INSTALL) -m 0750
++INSTALL_MAN		= $(INSTALL) -m 0644
+ prefix			= @prefix@
+ exec_prefix		= @exec_prefix@
+ CC				= @CC@
+diff -Naur isdn4k-utils/pppdcapiplugin/Makefile isdn4k-utils.oden/pppdcapiplugin/Makefile
+--- isdn4k-utils/pppdcapiplugin/Makefile	2006-08-08 20:12:36.000000000 +0200
++++ isdn4k-utils.oden/pppdcapiplugin/Makefile	2008-08-20 15:08:08.000000000 +0200
+@@ -12,7 +12,7 @@
+ export CAPIINC=$(TOPDIR)/../capi20
+ export CAPILIB=$(TOPDIR)/../capi20
+ export INSTALL=$(TOPDIR)/install-sh -c
+-export INSTALLDATA=$(TOPDIR)/install-sh -c -o root -m 600
++export INSTALLDATA=$(TOPDIR)/install-sh -c -m 600
+ export MKDIR=$(TOPDIR)/mkinstalldirs
+ export PPPINC=/usr/include/pppd
+ 
+diff -Naur isdn4k-utils/ttyId/Makefile isdn4k-utils.oden/ttyId/Makefile
+--- isdn4k-utils/ttyId/Makefile	2000-09-14 21:31:52.000000000 +0200
++++ isdn4k-utils.oden/ttyId/Makefile	2008-08-20 15:08:08.000000000 +0200
+@@ -18,8 +18,8 @@
+ MKDIR		=	mkdir -p -m 755
+ STRIP		=	strip
+ RM		=	rm
+-INSTALL		=	install -c -o root -g root -m 700
+-INSTALL2	=	install -c -o root -g root -m 600
++INSTALL		=	install -c -m 700
++INSTALL2	=	install -c -m 600
+ 
+ all:			ttyId
+ 
+diff -Naur isdn4k-utils/vbox/Makefile.in isdn4k-utils.oden/vbox/Makefile.in
+--- isdn4k-utils/vbox/Makefile.in	2002-01-31 21:05:40.000000000 +0100
++++ isdn4k-utils.oden/vbox/Makefile.in	2008-08-20 15:08:08.000000000 +0200
+@@ -14,33 +14,33 @@
+ # [*] Program to install binaries to the sbin directory (eg vboxgetty):      #
+ #----------------------------------------------------------------------------#
+ 
+-INSTALL_SBIN	= @INSTALL@ -m 750 -o root -g root -s
++INSTALL_SBIN	= @INSTALL@ -m 750 -s
+ 
+ #----------------------------------------------------------------------------#
+ # [*] Program to install binaries to the bin directory (eg vboxconvert):     #
+ #----------------------------------------------------------------------------#
+ 
+-INSTALL_BIN	= @INSTALL@ -m 755 -o root -g root -s
++INSTALL_BIN	= @INSTALL@ -m 755 -s
+ 
+ #----------------------------------------------------------------------------#
+ # [*] Program to install bash scripts to the bin directory (eg vboxplay):    #
+ #----------------------------------------------------------------------------#
+ 
+-INSTALL_SHBIN	= @INSTALL@ -m 755 -o root -g root
++INSTALL_SHBIN	= @INSTALL@ -m 755
+ 
+ #----------------------------------------------------------------------------#
+ # [*] Program to install binaries to the bin directory and set the suid bit  #
+ #     (eg vboxbeep):                                                         #
+ #----------------------------------------------------------------------------#
+ 
+-INSTALL_UBIN	= @INSTALL@ -m 4755 -o root -g root -s
++INSTALL_UBIN	= @INSTALL@ -m 4755 -s
+ 
+ #----------------------------------------------------------------------------#
+ # [*] Program to install configurations to sysconf directory                 #
+ #     (eg vboxgetty.conf):                                                   #
+ #----------------------------------------------------------------------------#
+ 
+-INSTALL_SYSCONF	= @INSTALL@ -m 640 -o root -g root
++INSTALL_SYSCONF	= @INSTALL@ -m 640
+ 
+ #----------------------------------------------------------------------------#
+ # [*] Program to create missing directories:                                 #

@@ -1,0 +1,12 @@
+--- isdn4k-utils/imontty/imontty.c.dams	Thu May 31 17:51:32 2001
++++ isdn4k-utils/imontty/imontty.c	Thu May 31 17:52:26 2001
+@@ -12,6 +12,9 @@
+ #include <linux/isdn.h>
+ #include "imontty.h"
+ 
++#define ISDN_MAX_DRIVERS 32
++#define ISDN_MAX_CHANNELS 64
++
+ struct phone_entry {
+    struct phone_entry *next;
+    char phone[30];

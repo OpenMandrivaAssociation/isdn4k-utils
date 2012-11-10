@@ -1,0 +1,11 @@
+--- isdn4k-utils/pppdcapiplugin/capiplugin.c.64bit-fixes	2004-09-20 11:02:47.835685000 -0400
++++ isdn4k-utils/pppdcapiplugin/capiplugin.c	2004-09-20 11:05:56.523747477 -0400
+@@ -968,7 +968,7 @@ static void wakeupdemand(void)
+ {
+     char data[] = "Ignore, is for demand wakeup";
+     struct sockaddr_in laddr, raddr;
+-    size_t addrlen;
++    socklen_t addrlen;
+     int sock_fd;
+     int serrno;
+ 

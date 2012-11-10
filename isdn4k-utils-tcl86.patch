@@ -1,0 +1,274 @@
+--- vbox/src/script.c.tcl86	2009-03-28 05:07:18.000000000 -0400
++++ vbox/src/script.c	2009-03-28 05:20:44.000000000 -0400
+@@ -103,7 +103,7 @@
+ 
+ 					if (Tcl_EvalFile(interpreter, script) != TCL_OK)
+ 					{
+-						log(L_ERROR, "In \"%s\": %s (line %d).\n", script, interpreter->result, interpreter->errorLine);
++						log(L_ERROR, "In \"%s\": %s (line %d).\n", script, Tcl_GetStringResult(interpreter), Tcl_GetErrorLine(interpreter));
+ 					}
+ 					else
+ 					{
+@@ -114,7 +114,7 @@
+ 				}
+ 					else log(L_FATAL, "Can't answer call!\n");
+ 				}
+-				else log(L_ERROR, "In \"%s\": %s (line %d).\n", script, interpreter->result, interpreter->errorLine);
++				else log(L_ERROR, "In \"%s\": %s (line %d).\n", script, Tcl_GetStringResult(interpreter), Tcl_GetErrorLine(interpreter));
+ 			}
+ 			else log(L_FATAL, "Can't create all new tcl commands.\n");
+ 
+@@ -170,7 +170,7 @@
+ 	    sleep(wait);
+ 	    log(L_INFO, "vboxputty: Running tcl script \"%s\"...\n", script);
+ 	    if (Tcl_EvalFile(interpreter, script) != TCL_OK) {
+-	      log(L_ERROR, "In \"%s\": %s (line %d).\n", script, interpreter->result, interpreter->errorLine);
++	      log(L_ERROR, "In \"%s\": %s (line %d).\n", script, Tcl_GetStringResult(interpreter), Tcl_GetErrorLine(interpreter));
+ 	    }
+ 	    else {
+ 	      log(L_DEBUG, "vboxputty: Back from tcl script...\n");
+@@ -182,7 +182,7 @@
+ 	    result = 99;
+ 	  }
+ 	}
+-	else log(L_ERROR, "In \"%s\": %s (line %d).\n", script, interpreter->result, interpreter->errorLine);
++	else log(L_ERROR, "In \"%s\": %s (line %d).\n", script, Tcl_GetStringResult(interpreter), Tcl_GetErrorLine(interpreter));
+       }
+       else log(L_FATAL, "Can't create all new tcl commands.\n");
+       if ((rcdelete = Tcl_InterpDeleted(interpreter)) == 0) {
+@@ -305,7 +305,7 @@
+ 	char       *need;
+ 	int         field;
+ 
+-	strcpy(ip->result, "");
++	strcpy(Tcl_GetStringResult(ip), "");
+ 
+ 	if (argc == 3)
+ 	{
+@@ -321,27 +321,27 @@
+ 				switch (field)
+ 				{
+ 					case 1:
+-						printstring(ip->result, "%ld", (long)ntohl(header.time));
++						printstring(Tcl_GetStringResult(ip), "%ld", (long)ntohl(header.time));
+ 						break;
+ 
+ 					case 2:
+-						printstring(ip->result, "%d", (int)ntohl(header.compression));
++						printstring(Tcl_GetStringResult(ip), "%d", (int)ntohl(header.compression));
+ 						break;
+ 
+ 					case 3:
+-						printstring(ip->result, "%s", header.callerid);
++						printstring(Tcl_GetStringResult(ip), "%s", header.callerid);
+ 						break;
+ 
+ 					case 4:
+-						printstring(ip->result, "%s", header.name);
++						printstring(Tcl_GetStringResult(ip), "%s", header.name);
+ 						break;
+ 
+ 					case 5:
+-						printstring(ip->result, "%s", header.phone);
++						printstring(Tcl_GetStringResult(ip), "%s", header.phone);
+ 						break;
+ 
+ 					case 6:
+-						printstring(ip->result, "%s", header.location);
++						printstring(Tcl_GetStringResult(ip), "%s", header.location);
+ 						break;
+ 
+ 					default:
+@@ -432,7 +432,7 @@
+ 	{
+ 		log(L_ERROR, "[vbox_put_message] usage: vbox_put_message <messagename>\n");
+ 
+-		printstring(ip->result, "ERROR");
++		printstring(Tcl_GetStringResult(ip), "ERROR");
+ 	}
+ 	else
+ 	{
+@@ -441,25 +441,25 @@
+ 		switch (result)
+ 		{
+ 			case VOICE_ACTION_ERROR:
+-				printstring(ip->result, "ERROR");
++				printstring(Tcl_GetStringResult(ip), "ERROR");
+ 				break;
+ 
+ 			case VOICE_ACTION_LOCALHANGUP:
+ 			case VOICE_ACTION_REMOTEHANGUP:
+-				printstring(ip->result, "HANGUP");
++				printstring(Tcl_GetStringResult(ip), "HANGUP");
+ 				break;
+ 
+ 			case VOICE_ACTION_TOUCHTONES:
+-				printstring(ip->result, touchtones);
++				printstring(Tcl_GetStringResult(ip), "%s", touchtones);
+ 				touchtones[0] = '\0';
+ 				break;
+ 
+ 			default:
+-				printstring(ip->result, "OK");
++				printstring(Tcl_GetStringResult(ip), "OK");
+ 				break;
+ 		}
+ 
+-		log(L_DEBUG, "[vbox_put_message] result \"%s\".\n", ip->result);
++		log(L_DEBUG, "[vbox_put_message] result \"%s\".\n", Tcl_GetStringResult(ip));
+ 	}
+ 
+ 	return(TCL_OK);
+@@ -477,7 +477,7 @@
+ 	{
+ 		log(L_ERROR, "[vbox_get_message] usage: vbox_get_message <messagename> <recordtime>\n");
+ 
+-		printstring(ip->result, "ERROR");
++		printstring(Tcl_GetStringResult(ip), "ERROR");
+ 	}
+ 	else
+ 	{
+@@ -486,29 +486,29 @@
+ 		switch (result)
+ 		{
+ 			case VOICE_ACTION_ERROR:
+-				printstring(ip->result, "ERROR");
++				printstring(Tcl_GetStringResult(ip), "ERROR");
+ 				break;
+ 
+ 			case VOICE_ACTION_TIMEOUT:
+-				printstring(ip->result, "TIMEOUT");
++				printstring(Tcl_GetStringResult(ip), "TIMEOUT");
+ 				break;
+ 
+ 			case VOICE_ACTION_LOCALHANGUP:
+ 			case VOICE_ACTION_REMOTEHANGUP:
+-				printstring(ip->result, "HANGUP");
++				printstring(Tcl_GetStringResult(ip), "HANGUP");
+ 				break;
+ 
+ 			case VOICE_ACTION_TOUCHTONES:
+-				printstring(ip->result, touchtones);
++				printstring(Tcl_GetStringResult(ip), "%s", touchtones);
+ 				touchtones[0] = '\0';
+ 				break;
+ 
+ 			default:
+-				printstring(ip->result, "OK");
++				printstring(Tcl_GetStringResult(ip), "OK");
+ 				break;
+ 		}
+ 
+-		log(L_DEBUG, "[vbox_get_message] result \"%s\".\n", ip->result);
++		log(L_DEBUG, "[vbox_get_message] result \"%s\".\n", Tcl_GetStringResult(ip));
+ 	}
+ 
+ 	return(TCL_OK);
+@@ -526,7 +526,7 @@
+ 	{
+ 		log(L_ERROR, "[vbox_wait] usage: vbox_wait <seconds>\n");
+ 
+-		printstring(ip->result, "ERROR");
++		printstring(Tcl_GetStringResult(ip), "ERROR");
+ 	}
+ 	else
+ 	{
+@@ -535,29 +535,29 @@
+ 		switch (result)
+ 		{
+ 			case VOICE_ACTION_ERROR:
+-				printstring(ip->result, "ERROR");
++				printstring(Tcl_GetStringResult(ip), "ERROR");
+ 				break;
+ 
+ 			case VOICE_ACTION_TIMEOUT:
+-				printstring(ip->result, "TIMEOUT");
++				printstring(Tcl_GetStringResult(ip), "TIMEOUT");
+ 				break;
+ 
+ 			case VOICE_ACTION_LOCALHANGUP:
+ 			case VOICE_ACTION_REMOTEHANGUP:
+-				printstring(ip->result, "HANGUP");
++				printstring(Tcl_GetStringResult(ip), "HANGUP");
+ 				break;
+ 
+ 			case VOICE_ACTION_TOUCHTONES:
+-				printstring(ip->result, touchtones);
++				printstring(Tcl_GetStringResult(ip), "%s", touchtones);
+ 				touchtones[0] = '\0';
+ 				break;
+ 
+ 			default:
+-				printstring(ip->result, "OK");
++				printstring(Tcl_GetStringResult(ip), "OK");
+ 				break;
+ 		}
+ 
+-		log(L_DEBUG, "[vbox_wait] result \"%s\".\n", ip->result);
++		log(L_DEBUG, "[vbox_wait] result \"%s\".\n", Tcl_GetStringResult(ip));
+ 	}
+ 
+ 	return(TCL_OK);
+@@ -575,7 +575,7 @@
+ 	{
+ 		log(L_ERROR, "[vbox_pause] usage: vbox_pause <ms>\n");
+ 
+-		printstring(ip->result, "ERROR");
++		printstring(Tcl_GetStringResult(ip), "ERROR");
+ 	}
+ 	else
+ 	{
+@@ -585,7 +585,7 @@
+ 
+ 		xpause(p);
+ 
+-		printstring(ip->result, "OK");
++		printstring(Tcl_GetStringResult(ip), "OK");
+ 	}
+ 
+ 	return(TCL_OK);
+@@ -599,7 +599,7 @@
+ {
+ 	*touchtones = '\0';
+ 
+-	printstring(ip->result, "OK");
++	printstring(Tcl_GetStringResult(ip), "OK");
+ 
+ 	return(TCL_OK);
+ }
+@@ -616,7 +616,7 @@
+ 	{
+ 		log(L_ERROR, "[vbox_get_nr_new_messages] usage: vbox_get_nr_new_messages <path>\n");
+ 
+-		printstring(ip->result, "0");
++		printstring(Tcl_GetStringResult(ip), "0");
+ 	}
+ 	else
+ 	{
+@@ -626,7 +626,7 @@
+ 
+ 		log(L_DEBUG, "[vbox_get_nr_new_messages] result \"%d\".\n", n);
+ 
+-		printstring(ip->result, "%d", n);
++		printstring(Tcl_GetStringResult(ip), "%d", n);
+ 	}
+ 
+ 	return(TCL_OK);
+@@ -644,7 +644,7 @@
+ 	{
+ 		log(L_ERROR, "[vbox_get_nr_all_messages] usage: vbox_get_nr_all_messages <path>\n");
+ 
+-		printstring(ip->result, "0");
++		printstring(Tcl_GetStringResult(ip), "0");
+ 	}
+ 	else
+ 	{
+@@ -654,7 +654,7 @@
+ 
+ 		log(L_DEBUG, "[vbox_get_nr_all_messages] result \"%d\".\n", n);
+ 
+-		printstring(ip->result, "%d", n);
++		printstring(Tcl_GetStringResult(ip), "%d", n);
+ 	}
+ 
+ 	return(TCL_OK);

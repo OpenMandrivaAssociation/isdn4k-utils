@@ -1,0 +1,10 @@
+--- isdn4k-utils/Makefile.ooo	2009-03-28 08:35:02.000000000 +0100
++++ isdn4k-utils/Makefile	2009-03-28 08:35:02.000000000 +0100
+@@ -132,6 +132,7 @@
+ 
+ install:
+ 	set -e; for i in `echo $(SUBDIRS)`; do $(MAKE) -C $$i install; done
++nodes:
+ 	@if [ -c $(DESTDIR)/dev/isdnctrl0 ] && ls -l $(DESTDIR)/dev/isdnctrl0 | egrep "[[:space:]]45,[[:space:]]+64[[:space:]]" > /dev/null; \
+ 	then \
+ 		/bin/echo -e '(some) ISDN devices already exist, not creating them.\nUse scripts/makedev.sh manually if necessary.'; \

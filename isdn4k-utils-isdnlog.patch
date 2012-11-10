@@ -1,0 +1,11 @@
+--- isdnlog/tools/dest/makedest.old	2002-02-22 12:10:25.000000000 +0100
++++ isdnlog/tools/dest/makedest	2003-04-28 11:31:39.000000000 +0200
+@@ -85,7 +85,7 @@ while ($ARGV[0] =~ /^-(.)(\S*)/) {
+ print "Writing to $dest_gdbm\n" if($verbose);
+ if (!$tied) {
+     unlink $dest_gdbm unless($append);
+-    tie(%db, 'AnyDBM_File',$dest_gdbm, O_RDWR | ($append ? 0 : O_CREAT), 0644); # make new
++    tie(%db, 'AnyDBM_File',$dest_gdbm, O_RDWR | ($append ? 0 : O_CREAT | O_TRUNC | O_RDWR), 0644); # make new
+ }
+ 
+ unless($append) {

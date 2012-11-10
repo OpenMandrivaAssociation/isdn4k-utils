@@ -1,0 +1,12 @@
+--- isdn4k-utils/ipppd/ipcp.c.orig	Tue Jul 20 23:20:19 1999
++++ isdn4k-utils/ipppd/ipcp.c	Tue Jul 20 23:17:16 1999
+@@ -1237,8 +1237,8 @@
+ 
+ #ifndef ISDN4LINUX_PATCH
+     sifdown(f->unit);
+-    cifaddr(f->unit, ouraddr, hisaddr);
+ #endif
++    cifaddr(f->unit, ouraddr, hisaddr);
+ 
+     /* Execute the ip-down script */
+     ipcp_script(f, _PATH_IPDOWN);

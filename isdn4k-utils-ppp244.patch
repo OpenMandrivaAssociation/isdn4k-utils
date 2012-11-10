@@ -1,0 +1,19 @@
+--- isdn4k-utils/pppdcapiplugin/ppp-2.4.4/pppd/patchlevel.h.ppp243	2005-04-05 17:14:40.536437192 +0200
++++ isdn4k-utils/pppdcapiplugin/ppp-2.4.4/pppd/patchlevel.h	2005-04-05 17:24:33.422260117 +0200
+@@ -1,4 +1,4 @@
+ /* $Id: patchlevel.h,v 1.1 2004/02/14 15:02:48 keil Exp $ */
+ 
+-#define VERSION		"2.4.2"
++#define VERSION		"2.4.4"
+ #define DATE		"13 Jan 2004"
+--- isdn4k-utils/pppdcapiplugin/Makefile.ppp243	2005-04-05 17:14:40.600438677 +0200
++++ isdn4k-utils/pppdcapiplugin/Makefile	2005-04-05 17:24:17.406123695 +0200
+@@ -18,7 +18,7 @@
+ PPPSRCDIRS=/src/isdn/pppd
+ 
+ ifeq ($(PPPVERSIONS),)
+-PPPVERSIONS = 2.3.11 2.4.0 2.4.1 2.4.1b1 2.4.1b2 2.4.2b3 2.4.2
++PPPVERSIONS = 2.3.11 2.4.0 2.4.1 2.4.1b1 2.4.1b2 2.4.2b3 2.4.2 2.4.4
+ endif
+ 
+ PEERDIR=${DESTDIR}/etc/ppp/peers/isdn
