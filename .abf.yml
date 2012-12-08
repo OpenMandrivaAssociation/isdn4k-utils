@@ -1,5 +1,3 @@
 sources:
-  "capi4linux:"	cc485bbb647deb4f29797816b5297511a31d3379
-  "isdn4k-utils-config:"	62701881017f3e2b2174bd046d84d9a216b9c5ce
-  "isdn4k-utils-ppp-2.4.4.tar.bz2:"	d7da9d47f52fdf695d2ac9e65f84cf80d5b2ef17
-  "isdn4k-utils.tar.gz:"	a05d4b4ed8c9cbaa81a104c4fa5a34f22c54a586
+  "isdn4k-utils-ppp-2.4.4.tar.bz2": d7da9d47f52fdf695d2ac9e65f84cf80d5b2ef17
+  "isdn4k-utils.tar.gz": a05d4b4ed8c9cbaa81a104c4fa5a34f22c54a586

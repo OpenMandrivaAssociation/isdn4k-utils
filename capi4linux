@@ -1,0 +1,61 @@
+#!/bin/bash
+
+# runlevelscript for capi4linux
+
+# Comments to support chkconfig
+# chkconfig: 2345 08 93
+# description: provides the basic capi subsystem
+#
+### BEGIN INIT INFO
+# Provides: capi4linux
+# Default-Start: 3 4 5
+# Short-Description: Basic capi subsystem
+# Description: Provides the basic capi subsystem
+### END INIT INFO
+
+#       /etc/rc.d/init.d/capi4linux
+
+SERVICE=capi4linux
+LOCKFILE=/var/lock/subsys/$SERVICE
+
+test -x /usr/sbin/capiinit || exit 0
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+RETVAL=0
+# See how we were called.
+
+case "$1" in
+	  start)
+	          gprintf  "Starting capi4linux: "
+	          [ ! -c /dev/capi20 ] && mknod /dev/capi20 c 68 0
+		  daemon capiinit start
+	          RETVAL=$?
+		  [ $RETVAL == 0 ] &&  touch $LOCKFILE
+	          echo
+	          ;;
+	  stop)
+		  gprintf "Shutting down capi4linux: "
+	          daemon capiinit stop
+	          RETVAL=$?
+		  [ $RETVAL == 0 ] &&  touch $LOCKFILE
+	          echo
+	          ;;
+		  
+	status)
+		  capiinit show &> /dev/null
+		  RETVAL=$?
+ 		  [ $RETVAL -eq 0 ] && gprintf "%s is running\n" $SERVICE || gprintf "%s is not running\n" $SERVICE
+		  ;;
+        restart)
+		  $0 stop
+		  $0 start
+		  RETVAL=$?
+		  ;;
+	  *)
+	          gprintf "Usage: %s {start|stop|show|restart}" "$0"
+	          exit 1
+esac
+
+exit $RETVAL
