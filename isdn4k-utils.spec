@@ -130,6 +130,7 @@ Requires:	%{name} >= %{epoch}:%{version}
 # - AdamW 2008/10
 Obsoletes:	%{mklibname isdn4k-utils 2} <= 1:3.2p3-38mdv2009.0
 %rename		%{oldlib}
+Conflicts:	%{name} < 1:3.12-11
 
 %description -n	%{libname}
 isdn4k-utils is a collection of various ISDN related utilities. This
@@ -326,6 +327,7 @@ mv %{buildroot}/sbin/* %{buildroot}%{_sbindir}/
 
 %files
 %doc README NEWS
+%{_libdir}/pppd/%{pppd_ver}/*
 %dir %{_libdir}/isdn
 %dir %{_datadir}/isdn
 %{_datadir}/isdn/*
@@ -462,7 +464,6 @@ mv %{buildroot}/sbin/* %{buildroot}%{_sbindir}/
 %doc COPYING README NEWS
 %defattr(755,root,root,755)
 %{_libdir}/libcapi*.so.%{major}*
-%{_libdir}/pppd/%{pppd_ver}/*
 
 %files -n %{devname}
 %attr(755,root,root) %{_libdir}/libcapi*.so
