@@ -1,6 +1,9 @@
 %define major 3
-%define libname %mklibname %{name} %{major}
-%define develname %mklibname %{name} -d
+%define oldlib	%mklibname %{name} %{major}
+%define olddev	%mklibname %{name} -d
+
+%define	libname	%mklibname capi20_ %{major}
+%define	devname	%mklibname capi20 -d
 
 %define pppd_ver %(/usr/sbin/pppd --version 2>&1 | sed -n '/pppd version \\([0-9][.0-9]*\\)/s//\\1/p')
 %define pppd_ver_num %(echo %{pppd_ver} | perl -pe '/(\\d+)\\.(\\d)\\.?(\\d)?\\.?(\\d)?/; $_=($1)*1000000+($2)*10000+($3)*100+($4||0)')
@@ -8,7 +11,7 @@
 Summary:	Bundled Utilities for configuring ISDN4Linux
 Name:		isdn4k-utils
 Version:	3.12
-Release:	10
+Release:	11
 License:	GPLv2
 Epoch:		1
 Group:		System/Configuration/Networking
@@ -41,6 +44,7 @@ Patch31:	isdn4k-utils-CVS-2010-05-01-capi.patch
 Patch32:	isdn4k-utils-automake-1.13-fixes.patch
 Requires(post): rpm-helper
 Requires(preun):rpm-helper
+Conflicts:	%{oldlib} < 1:3.12-11
 BuildRequires:	autoconf automake libtool
 BuildRequires:	gdbm-devel
 BuildRequires:	imake
@@ -125,6 +129,7 @@ Requires:	%{name} >= %{epoch}:%{version}
 # versioning the lib package at all.
 # - AdamW 2008/10
 Obsoletes:	%{mklibname isdn4k-utils 2} <= 1:3.2p3-38mdv2009.0
+%rename		%{oldlib}
 
 %description -n	%{libname}
 isdn4k-utils is a collection of various ISDN related utilities. This
@@ -136,15 +141,16 @@ capifax, a faxmachine.
 This package contains the library needed to run programs dynamically
 linked with %{name}.
 
-%package -n	%{develname}
+%package -n	%{devname}
 Summary:	Includes and other files to develop %{name} applications
 Group:		Development/C
 Requires:	%{libname} >= %{epoch}:%{version}-%{release}
 Provides:	lib%{name}-devel %{name}-devel
 Obsoletes:	%{mklibname %{name} -d 2}
 Conflicts:	%{_lib}isdn4k-utils3 < 1:3.12-7mdv
+%rename		%{olddev}
 
-%description -n	%{develname}
+%description -n	%{devname}
 Libraries, include files and other resources you can use to develop
 %{name} applications.
 
@@ -458,7 +464,7 @@ mv %{buildroot}/sbin/* %{buildroot}%{_sbindir}/
 %{_libdir}/libcapi*.so.%{major}*
 %{_libdir}/pppd/%{pppd_ver}/*
 
-%files -n %{develname}
+%files -n %{devname}
 %attr(755,root,root) %{_libdir}/libcapi*.so
 %{_includedir}/capi*.h
 
