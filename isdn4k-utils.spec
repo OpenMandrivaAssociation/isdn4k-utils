@@ -38,8 +38,9 @@ Patch28:	isdn4k-utils-fix-str-fmt.patch
 Patch29:	isdn4k-utils-tcl86.patch
 Patch30:	isdn4k-utils-autoconf-2.6.4-quoting.patch
 Patch31:	isdn4k-utils-CVS-2010-05-01-capi.patch
+Patch32:	isdn4k-utils-automake-1.13-fixes.patch
 Requires(post): rpm-helper
-Requires(preun): rpm-helper
+Requires(preun):rpm-helper
 BuildRequires:	autoconf automake libtool
 BuildRequires:	gdbm-devel
 BuildRequires:	imake
@@ -200,6 +201,7 @@ perl -pi -e "s|/usr/lib/|%{_libdir}/|" pppdcapiplugin/ppp-2.*/Makefile pppdcapip
 %patch29 -p0 -b .tcl86
 %patch30 -p1 -b .autoconf
 %patch31 -p1 -b .capi
+%patch32 -p1 -b .am113~
 
 #(peroyvind) provide our own config file with correct options and paths
 install %{SOURCE1} .config

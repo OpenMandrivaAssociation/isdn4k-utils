@@ -1,0 +1,60 @@
+--- isdn4k-utils/capifax/configure.in~	2013-02-23 08:48:09.811953269 +0100
++++ isdn4k-utils/capifax/configure.in	2013-02-23 08:49:51.438497895 +0100
+@@ -43,5 +43,5 @@ CS_TEST_GLOBALCONFIG
+ AC_SUBST(INSTALL)
+ AC_SUBST(CONFIG_SBINDIR)
+ AC_SUBST(CONFIG_MANDIR)
+-AM_CONFIG_HEADER(config.h)
++AC_CONFIG_HEADER(config.h)
+ AC_OUTPUT(Makefile)
+--- isdn4k-utils/capiinfo/configure.in~	2013-02-23 08:48:09.829953543 +0100
++++ isdn4k-utils/capiinfo/configure.in	2013-02-23 08:50:02.629668096 +0100
+@@ -36,5 +36,5 @@ AC_SUBST(I4LCONFDIR)
+ AC_SUBST(I4LVERSION)
+ AC_SUBST(CONFIG_SBINDIR)
+ AC_SUBST(CONFIG_MANDIR)
+-AM_CONFIG_HEADER(config.h)
++AC_CONFIG_HEADER(config.h)
+ AC_OUTPUT(Makefile)
+--- isdn4k-utils/capiinit/configure.in~	2013-02-23 08:48:09.842953740 +0100
++++ isdn4k-utils/capiinit/configure.in	2013-02-23 08:50:12.075811956 +0100
+@@ -18,5 +18,5 @@ AC_SUBST(INSTALL)
+ AC_SUBST(CONFIG_SBINDIR)
+ AC_SUBST(CONFIG_MANDIR)
+ AC_SUBST(CONFIG_FIRMWAREDIR)
+-AM_CONFIG_HEADER(config.h)
++AC_CONFIG_HEADER(config.h)
+ AC_OUTPUT(Makefile)
+--- isdn4k-utils/isdnlog/client/configure.in~	2013-02-23 08:48:10.246959882 +0100
++++ isdn4k-utils/isdnlog/client/configure.in	2013-02-23 08:51:24.538914845 +0100
+@@ -14,7 +14,7 @@ dnl make $KDEDIR the default for the ins
+ AC_PREFIX_DEFAULT(${KDEDIR:-/usr/local/kde})
+ 
+ dnl generate the config header
+-AM_CONFIG_HEADER(config.h) dnl at the distribution this done
++AC_CONFIG_HEADER(config.h) dnl at the distribution this done
+ 
+ dnl checks, if the debug code is wanted
+ AC_CHECK_FLAGS
+--- isdn4k-utils/vbox3/configure.in~	2013-02-23 08:48:10.757967651 +0100
++++ isdn4k-utils/vbox3/configure.in	2013-02-23 08:51:04.972616730 +0100
+@@ -12,7 +12,7 @@ AM_INIT_AUTOMAKE(vbox, 3.0B1)
+ 
+ AC_PREFIX_DEFAULT(/opt/vbox)
+ 
+-AM_CONFIG_HEADER(config.h)
++AC_CONFIG_HEADER(config.h)
+ 
+ ## programs ###############################################################
+ 
+--- isdn4k-utils/vbox/configure.in~	2013-02-23 08:48:10.954970646 +0100
++++ isdn4k-utils/vbox/configure.in	2013-02-23 08:50:59.833538502 +0100
+@@ -3,7 +3,7 @@ dnl     generate the file "configure", w
+ dnl     to configure the system for the local environment.
+ 
+ AC_INIT(src/vboxgetty.h)
+-AM_CONFIG_HEADER(src/config.h)
++AC_CONFIG_HEADER(src/config.h)
+ 
+ dnl #------------------------------------------------------------------------#
+ dnl # Version of the vbox package. Theres no need to change this ;-)         #
