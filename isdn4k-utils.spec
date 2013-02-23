@@ -123,7 +123,6 @@ next unit starts.
 %package -n	%{libname}
 Summary:	Main library for %{name}
 Group:		System/Libraries
-Requires:	%{name} >= %{epoch}:%{version}
 # There's a ton of non-versioned libs, plugins and development files
 # in the library package, so it needs to obsolete its old major(s)
 # In fact, if this isn't going to be fixed, there's really no point
