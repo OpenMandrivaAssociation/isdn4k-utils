@@ -67,6 +67,7 @@ BuildRequires:	libxmu-devel
 BuildRequires:	libxpm-devel
 BuildRequires:	libxp-devel
 BuildRequires:	libxt-devel
+Conflicts:	%{oldlib} < 1:3.12-11
 
 %description
 isdn4k-utils is a collection of various ISDN related utilities. This
