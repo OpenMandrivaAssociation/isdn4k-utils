@@ -146,7 +146,7 @@ linked with %{name}.
 Summary:	Includes and other files to develop %{name} applications
 Group:		Development/C
 Requires:	%{libname} >= %{epoch}:%{version}-%{release}
-Provides:	lib%{name}-devel %{name}-devel
+Provides:	%{name}-devel
 Obsoletes:	%{mklibname %{name} -d 2}
 Conflicts:	%{_lib}isdn4k-utils3 < 1:3.12-7mdv
 %rename		%{olddev}
