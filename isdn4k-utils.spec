@@ -49,24 +49,19 @@ BuildRequires:	autoconf automake libtool
 BuildRequires:	gdbm-devel
 BuildRequires:	imake
 BuildRequires:	kernel-source
-BuildRequires:	tcl-devel
-BuildRequires:	libxext-devel
-BuildRequires:	libxmu-devel
-BuildRequires:	libxp-devel
-BuildRequires:	libxt-devel
+BuildRequires:	pkgconfig(tcl)
 BuildRequires:	linuxdoc-tools
-BuildRequires:	ncurses-devel
-BuildRequires:	openssl-devel
+BuildRequires:	pkgconfig(ncurses)
+BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pcap-devel
 BuildRequires:	ppp
 BuildRequires:	ppp-devel
-BuildRequires:	libx11-devel
-BuildRequires:	libxaw-devel
-BuildRequires:	libxext-devel
-BuildRequires:	libxmu-devel
-BuildRequires:	libxpm-devel
-BuildRequires:	libxp-devel
-BuildRequires:	libxt-devel
+BuildRequires:	pkgconfig(x11)
+BuildRequires:	pkgconfig(xaw7)
+BuildRequires:	pkgconfig(xext)
+BuildRequires:	pkgconfig(xmu)
+BuildRequires:	pkgconfig(xpm)
+BuildRequires:	pkgconfig(xt)
 Conflicts:	%{oldlib} < 1:3.12-11
 
 %description
