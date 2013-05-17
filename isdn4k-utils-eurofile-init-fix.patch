@@ -1,5 +1,5 @@
---- eurofile/scripts/eftd.sh.in.orig	2003-04-28 21:11:35.000000000 +0200
-+++ eurofile/scripts/eftd.sh.in	2003-04-28 21:19:24.000000000 +0200
+--- ./eurofile/scripts/eftd.sh.in.orig	2003-04-28 21:11:35.000000000 +0200
++++ ./eurofile/scripts/eftd.sh.in	2003-04-28 21:19:24.000000000 +0200
 @@ -30,6 +30,9 @@
  #            At least one isdn HL driver which supports l2_prot x75i
  #                        (i.e. insmod HiSax ...)

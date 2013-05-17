@@ -31,7 +31,7 @@ Patch15:	%{name}-eurofile-init-fix.patch
 Patch16:	%{name}-3.2p3-skip-capi-header-check.patch
 Patch18:	isdn4k-utils-lib64.patch
 Patch20:	isdn4k-utils-64bit-fixes.patch
-Patch21:	isdn4k-utils-ppp244.patch
+#Patch21:	isdn4k-utils-ppp244.patch
 Patch23:	isdn4k-utils-target.patch
 # capi20.h must #include sys/types.h - AdamW 2008/02
 Patch24:	isdn4k-utils-3.2p3-types.patch
@@ -75,7 +75,7 @@ capifax, a faxmachine.
 %package	xtools
 Summary:	ISDN utilities that use X
 Group:		Networking/Other
-Requires:	%{name} >= %{epoch}:%{version}
+Requires:	%{name} >= %{EVRD}
 
 %description	xtools
 These are the graphical utilities for ISDN, xmonisdn and xisdnload.
@@ -86,7 +86,7 @@ connection, for example.
 %package	vbox
 Summary:	ISDN answering machine
 Group:		Communications
-Requires:	%{name} >= %{epoch}:%{version}
+Requires:	%{name} >= %{EVRD}
 
 %description	vbox
 ISDN Answering Machine
@@ -95,7 +95,7 @@ ISDN Answering Machine
 Summary:	ISDN eurofile transfer tool
 Group:		Networking/File transfer
 License:	LGPLv2
-Requires:	%{name} >= %{epoch}:%{version}
+Requires:	%{name} >= %{EVRD}
 Requires(post,preun): rpm-helper
 
 %description	eurofile
@@ -105,7 +105,7 @@ you need this package.
 %package	isdnlog
 Summary:	ISDN connection logger
 Group:		Communications
-Requires:	%{name} >= %{epoch}:%{version}
+Requires:	%{name} >= %{EVRD}
 
 %description	isdnlog
 isdnlog logs all ISDN connections, and can calculate the cost of calls.
@@ -133,8 +133,8 @@ linked with %{name}.
 %package -n	%{devname}
 Summary:	Includes and other files to develop %{name} applications
 Group:		Development/C
-Requires:	%{libname} >= %{epoch}:%{version}-%{release}
-Provides:	%{name}-devel
+Requires:	%{libname} >= %{EVRD}
+Provides:	%{name}-devel %{EVRD}
 Conflicts:	%{_lib}isdn4k-utils3 < 1:3.12-7mdv
 %rename		%{olddev}
 
@@ -160,6 +160,7 @@ capifax, a faxmachine.
 
 %prep
 %setup -qn %{name} -a3
+%apply_patches
 
 find . -type d -perm 0700 -exec chmod 755 {} \;
 find . -type f -perm 0554 -exec chmod 755 {} \;
@@ -170,31 +171,8 @@ for i in `find . -type d -name CVS` `find . -type f -name .cvs\*` `find . -type 
     if [ -e "$i" ]; then rm -rf $i; fi >&/dev/null
 done
 
-%patch1 -p1 -b .old
-%patch3 -p1 -b .old
-%patch7 -p1 -b .old
-%patch9 -p1 -b .old
-%patch10 -p0 -b .old
-%patch11 -p1 -b .old
-%patch15 -p0 -b .old
-%patch16 -p1 -b .nocheck
-%patch18 -p1 -b .lib64
-%patch20 -p1 -b .64bit-fixes
-
 # (simpler) lib64 fix
 sed -i -e "s|/usr/lib/|%{_libdir}/|" pppdcapiplugin/ppp-2.*/Makefile pppdcapiplugin/Makefile.template
-
-%patch23 -p1 -b .target
-%patch24 -p1 -b .types
-%patch25 -p1 -b .autoconf25x
-%patch26 -p1 -b .cleanup
-%patch27 -p0 -b .openssl_des.h_fix
-
-%patch28 -p0 -b .str
-%patch29 -p0 -b .tcl86
-%patch30 -p1 -b .autoconf
-%patch31 -p1 -b .capi
-%patch32 -p1 -b .am113~
 
 #(peroyvind) provide our own config file with correct options and paths
 install %{SOURCE1} .config
