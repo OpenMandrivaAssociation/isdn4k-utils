@@ -13,7 +13,7 @@ Summary:	Bundled Utilities for configuring ISDN4Linux
 Name:		isdn4k-utils
 Epoch:		1
 Version:	3.12
-Release:	14
+Release:	15
 License:	GPLv2
 Group:		System/Configuration/Networking
 Url:		http://www.isdn4linux.de/
