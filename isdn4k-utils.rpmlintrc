@@ -1,0 +1,4 @@
+#false positive
+addFilter("E: non-readable")
+addFilter("E: non-standard-executable-perm")
+
