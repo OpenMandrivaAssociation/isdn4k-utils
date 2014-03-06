@@ -216,8 +216,8 @@ if [ -x /usr/share/automake/depcomp ] ; then
 fi
 
 # we need it on ia64 machine
-( cd capi20; [ -f configure.in ] && libtoolize --copy --force )
-( cd vbox; [ -f configure.in ] && libtoolize --copy --force )
+( cd capi20; [ -f configure.ac ] && libtoolize --copy --force )
+( cd vbox; [ -f configure.ac ] && libtoolize --copy --force )
 
 #(peroyvind) added more flags for pppdcapiplugin since we're overriding it's CFLAGS which cointains flags needed
 RPM_OPT_FLAGS="$RPM_OPT_FLAGS -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DISDN_MAX_DRIVERS=32 -DISDN_MAX_CHANNELS=64 -fPIC -DPPPVER=%{pppd_ver_num} -I. -I`pwd`/capi20 -Ipppd -L`pwd`/capi20 -I./include"
