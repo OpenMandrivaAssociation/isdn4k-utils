@@ -21,6 +21,7 @@ Source0:	%{name}.tar.gz
 Source1:	%{name}-config
 Source2:	capi4linux
 Source3:	isdn4k-utils-ppp-2.4.4.tar.bz2
+Source100:	isdn4k-utils.rpmlintrc
 Patch1:		%{name}.ipppd.patch
 Patch3:		%{name}-no-root.patch
 Patch7:		%{name}-nomknod.patch
