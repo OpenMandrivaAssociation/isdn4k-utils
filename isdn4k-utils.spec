@@ -215,6 +215,9 @@ if [ -x /usr/share/automake/depcomp ] ; then
   done
 fi
 
+# We change the configure script to be configure.ac and this hard-coded makefile checks for configure.in
+perl -pi -e 's/configure.in/configure.ac/' eurofile/Makefile
+
 # we need it on ia64 machine
 ( cd capi20; [ -f configure.ac ] && libtoolize --copy --force )
 ( cd vbox; [ -f configure.ac ] && libtoolize --copy --force )
