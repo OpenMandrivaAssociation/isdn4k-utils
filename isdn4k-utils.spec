@@ -232,7 +232,7 @@ cp isdnlog/isdnlog/isdnlog.5.in isdnlog/isdnlog/isdnlog.5
 touch rcapid/acinclude.m4
 
 # (blino) compile pppdcapiplugin for current pppd only to avoid errors and unnecessary time spent on compiling
-sed -i -e "s|^(PPPVERSIONS\s*)=\s*.+$|\1= %{pppd_ver}|" pppdcapiplugin/Makefile
+sed -i -e "s|^\(PPPVERSIONS\s*\)=\s*.+$|\1= %{pppd_ver}|" pppdcapiplugin/Makefile
 
 #(peroyvind) added CCFLAGS since it's a variable used a few places in stead of CFLAGS (*sigh*)
 make CFLAGS="$RPM_OPT_FLAGS" CXXFLAGS="$RPM_OPT_FLAGS" CCFLAGS="$RPM_OPT_FLAGS" || make CFLAGS="$RPM_OPT_FLAGS" CXXFLAGS="$RPM_OPT_FLAGS" CCFLAGS="$RPM_OPT_FLAGS"
