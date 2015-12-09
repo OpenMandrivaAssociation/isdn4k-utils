@@ -9,6 +9,8 @@
 %define pppd_ver %(/usr/sbin/pppd --version 2>&1 | sed -n '/pppd version \\([0-9][.0-9]*\\)/s//\\1/p')
 %define pppd_ver_num %(echo %{pppd_ver} | perl -pe '/(\\d+)\\.(\\d)\\.?(\\d)?\\.?(\\d)?/; $_=($1)*1000000+($2)*10000+($3)*100+($4||0)')
 
+%define _disable_lto 1
+
 Summary:	Bundled Utilities for configuring ISDN4Linux
 Name:		isdn4k-utils
 Epoch:		1
@@ -44,9 +46,10 @@ Patch29:	isdn4k-utils-tcl86.patch
 Patch30:	isdn4k-utils-autoconf-2.6.4-quoting.patch
 Patch31:	isdn4k-utils-CVS-2010-05-01-capi.patch
 Patch32:	isdn4k-utils-automake-1.13-fixes.patch
+Patch33:	isdn4k-utils-gcc5.patch
 
 BuildRequires:	imake
-BuildRequires:	kernel-source
+BuildRequires:	kernel-headers
 BuildRequires:	libtool
 BuildRequires:	linuxdoc-tools
 BuildRequires:	ppp

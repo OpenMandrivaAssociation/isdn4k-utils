@@ -1,0 +1,18 @@
+diff -up isdn4k-utils-CVS-2010-05-01-patched/isdnlog/tools/rate.c.than isdn4k-utils-CVS-2010-05-01-patched/isdnlog/tools/rate.c
+diff -up isdn4k-utils-CVS-2010-05-01-patched/isdnlog/tools/rate.h.than isdn4k-utils-CVS-2010-05-01-patched/isdnlog/tools/rate.h
+--- isdn4k-utils-CVS-2010-05-01-patched/isdnlog/tools/rate.h.than	2015-07-10 10:57:11.887324334 +0200
++++ isdn4k-utils-CVS-2010-05-01-patched/isdnlog/tools/rate.h	2015-07-10 11:01:23.015514838 +0200
+@@ -275,11 +275,11 @@ char *printRate (double value);
+ int pnum2prefix(int pnum, time_t when);
+ int pnum2prefix_variant(char * pnum, time_t when);
+ int vbn2prefix(char *vbn, int *len);
+-inline int getNProvider( void );
++extern inline int getNProvider( void );
+ /* char   *prefix2provider(int prefix, char *s) is defined in telnum.h */
+ char   *prefix2provider_variant(int prefix, char *s);
+ int isProviderValid(int prefix, time_t when);
+-inline int isProviderBooked( int i);
++extern inline int isProviderBooked( int i);
+ int getPrsel(char *telnum, int *provider, int *zone, int *area);
+ 
+ 
