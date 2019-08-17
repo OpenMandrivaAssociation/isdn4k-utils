@@ -15,7 +15,7 @@ Summary:	Bundled Utilities for configuring ISDN4Linux
 Name:		isdn4k-utils
 Epoch:		1
 Version:	3.12
-Release:	23
+Release:	24
 License:	GPLv2
 Group:		System/Configuration/Networking
 Url:		http://www.isdn4linux.de/
@@ -47,9 +47,13 @@ Patch30:	isdn4k-utils-autoconf-2.6.4-quoting.patch
 Patch31:	isdn4k-utils-CVS-2010-05-01-capi.patch
 Patch32:	isdn4k-utils-automake-1.13-fixes.patch
 Patch33:	isdn4k-utils-gcc5.patch
+Patch34:	isdn4k-utils-compile.patch
+
+# Docs no longer build in current environments
+Obsoletes:	%{name}-doc < %{EVRD}
 
 BuildRequires:	imake
-BuildRequires:	kernel-headers
+BuildRequires:	kernel-release-headers
 BuildRequires:	libtool
 BuildRequires:	linuxdoc-tools
 BuildRequires:	ppp
@@ -146,22 +150,6 @@ Conflicts:	%{_lib}isdn4k-utils3 < 1:3.12-7mdv
 Libraries, include files and other resources you can use to develop
 %{name} applications.
 
-%package	doc
-Summary:	Complete HTML documentation for isdn4k-utils
-Group:		System/Configuration/Networking
-Conflicts:	isdn4k-utils < 3.2p3-28mdv2007.1
-
-%description	doc
-This is the original, complete, documentation for isdn4k-utils, in
-HTML format.
-
-isdn4k-utils is a collection of various ISDN related utilities. This
-package contains configuration tools for all ISDN adapters, supported
-by Linux. Furthermore, several status-monitors are provided as well as
-some ISDN-based applications. Namely ipppd, a PPP daemon for synchronous
-PPP over ISDN; vbox, an answering-machine and (for use with AVM-B1 only)
-capifax, a faxmachine.
-
 %prep
 %setup -qn %{name} -a3
 %apply_patches
@@ -181,14 +169,6 @@ sed -i -e "s|/usr/lib/|%{_libdir}/|" pppdcapiplugin/ppp-2.*/Makefile pppdcapiplu
 #(peroyvind) provide our own config file with correct options and paths
 install %{SOURCE1} .config
 echo "LIBDIR='%{_libdir}'" >> .config
-
-# AMD K6 is not an i686
-%ifarch
-sed -i -e "s/k6 \| //" vbox3/config.sub
-sed -i -e "s/k6-\* \| //" vbox3/config.sub
-sed -i -e "s/\| k5 \|/\| k5 \| k6 \|/" vbox3/config.sub
-sed -i -e "s/\| k5-\* \|/\| k5-\* \| k6-* \|/" vbox3/config.sub
-%endif
 
 # tcl hack
 . %{_libdir}/tclConfig.sh
@@ -276,7 +256,6 @@ install -m755 %{SOURCE2} %{buildroot}%{_initrddir}/capi4linux
 rm -rf %{buildroot}%{_sysconfdir}/drdsl
 
 # cleanup
-rm -f %{buildroot}/usr/share/doc/i4lfaq*
 rm -f %{buildroot}%{_libdir}/*.*a
 
 # hmm...
@@ -433,8 +412,3 @@ mv %{buildroot}/sbin/* %{buildroot}%{_sbindir}/
 %doc COPYING README NEWS
 %attr(755,root,root) %{_libdir}/libcapi*.so
 %{_includedir}/capi*.h
-
-%files doc
-%lang(de) %doc FAQ/i4lfaq-de*
-%doc FAQ/i4lfaq-[123456789]*.html FAQ/i4lfaq.*
-

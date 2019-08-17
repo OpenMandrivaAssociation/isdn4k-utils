@@ -1,0 +1,58 @@
+diff -up isdn4k-utils/FAQ/Makefile.in.omv~ isdn4k-utils/FAQ/Makefile.in
+--- isdn4k-utils/FAQ/Makefile.in.omv~	2019-08-17 16:05:39.886804052 +0200
++++ isdn4k-utils/FAQ/Makefile.in	2019-08-17 16:06:34.385102245 +0200
+@@ -35,8 +35,8 @@ DE_OUT_HTML = $(DE_OUT_NAME).html
+ 
+ # Generate all FAQ versions
+ all: Makefile \
+-	$(OUT_HTML) $(OUT_TXT) \
+-	$(DE_OUT_HTML) $(DE_OUT_TXT)
++#	$(OUT_HTML) $(OUT_TXT) \
++#	$(DE_OUT_HTML) $(DE_OUT_TXT)
+ 
+ eng: Makefile \
+ 	$(OUT_HTML) $(OUT_TXT)
+@@ -125,19 +125,19 @@ $(DE_OUT_NAME).txt.gz: $(DE_OUT_TXT)
+ 
+ # Install output files
+ install: all
+-	if [ -n "$(TARGET_DIR)" ]; then \
+-		$(INSTALL) -m 0755 -d $(DESTDIR)$(TARGET_DIR); \
+-		$(INSTALL) -m 0644 $(SRC) $(DESTDIR)$(TARGET_DIR); \
+-		$(INSTALL) -m 0644 $(OUT_TXT) $(DESTDIR)$(TARGET_DIR); \
+-		$(INSTALL) -m 0644 $(OUT_NAME).html $(DESTDIR)$(TARGET_DIR); \
+-		$(INSTALL) -m 0644 $(OUT_NAME)-[0-9].html $(DESTDIR)$(TARGET_DIR); \
+-		$(INSTALL) -m 0644 $(OUT_NAME)-[0-9][0-9].html $(DESTDIR)$(TARGET_DIR); \
+-		$(INSTALL) -m 0644 $(DE_SRC) $(DESTDIR)$(TARGET_DIR); \
+-		$(INSTALL) -m 0644 $(DE_OUT_TXT) $(DESTDIR)$(TARGET_DIR); \
+-		$(INSTALL) -m 0644 $(DE_OUT_NAME).html $(DESTDIR)$(TARGET_DIR); \
+-		$(INSTALL) -m 0644 $(DE_OUT_NAME)-[0-9].html $(DESTDIR)$(TARGET_DIR); \
+-		$(INSTALL) -m 0644 $(DE_OUT_NAME)-[0-9][0-9].html $(DESTDIR)$(TARGET_DIR); \
+-	fi
++#	if [ -n "$(TARGET_DIR)" ]; then \
++#		$(INSTALL) -m 0755 -d $(DESTDIR)$(TARGET_DIR); \
++#		$(INSTALL) -m 0644 $(SRC) $(DESTDIR)$(TARGET_DIR); \
++#		$(INSTALL) -m 0644 $(OUT_TXT) $(DESTDIR)$(TARGET_DIR); \
++#		$(INSTALL) -m 0644 $(OUT_NAME).html $(DESTDIR)$(TARGET_DIR); \
++#		$(INSTALL) -m 0644 $(OUT_NAME)-[0-9].html $(DESTDIR)$(TARGET_DIR); \
++#		$(INSTALL) -m 0644 $(OUT_NAME)-[0-9][0-9].html $(DESTDIR)$(TARGET_DIR); \
++#		$(INSTALL) -m 0644 $(DE_SRC) $(DESTDIR)$(TARGET_DIR); \
++#		$(INSTALL) -m 0644 $(DE_OUT_TXT) $(DESTDIR)$(TARGET_DIR); \
++#		$(INSTALL) -m 0644 $(DE_OUT_NAME).html $(DESTDIR)$(TARGET_DIR); \
++#		$(INSTALL) -m 0644 $(DE_OUT_NAME)-[0-9].html $(DESTDIR)$(TARGET_DIR); \
++#		$(INSTALL) -m 0644 $(DE_OUT_NAME)-[0-9][0-9].html $(DESTDIR)$(TARGET_DIR); \
++#	fi
+ 
+ # Un-install output files
+ uninstall:
+diff -up isdn4k-utils/isdnlog/tools/dest/makedest.omv~ isdn4k-utils/isdnlog/tools/dest/makedest
+--- isdn4k-utils/isdnlog/tools/dest/makedest.omv~	2019-08-17 16:02:27.925735256 +0200
++++ isdn4k-utils/isdnlog/tools/dest/makedest	2019-08-17 16:03:52.770211578 +0200
+@@ -30,6 +30,7 @@
+ package main;
+ # perl 5.8.0 could use UTF-8 as default encoding, which has to be prevented.
+ eval q( use open ':encoding(iso-8859-1)' );
++use lib '.';
+ use wld;
+ BEGIN {
+   if ( (! exists $ENV{DBEXT} or $ENV{DBEXT} eq ".cdb") and
