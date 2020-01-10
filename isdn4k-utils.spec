@@ -152,7 +152,7 @@ Libraries, include files and other resources you can use to develop
 
 %prep
 %setup -qn %{name} -a3
-%apply_patches
+%autopatch -p1
 
 find . -type d -perm 0700 -exec chmod 755 {} \;
 find . -type f -perm 0554 -exec chmod 755 {} \;
