@@ -18,7 +18,7 @@ Version:	3.27
 Release:	1
 License:	GPLv2
 Group:		System/Configuration/Networking
-Url:		http://www.isdn4linux.de/
+Url:		https://www.isdn4linux.de/
 Source0:	%{name}.tar.gz
 Source1:	%{name}-config
 Source2:	capi4linux
